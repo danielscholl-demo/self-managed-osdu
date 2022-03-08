@@ -1,4 +1,4 @@
-name: '4. Stamp Install'
+name: "4. Stamp Install"
 
 on:
   workflow_dispatch:
@@ -7,11 +7,10 @@ env:
   CLI_VERSION: 2.30.0
   CLUSTER: osdu-stamp
 
-  OSDU_VERSION: v0.11.0
+  OSDU_VERSION: v0.13.0
   PARTITION_NAME: opendes
 
 jobs:
-
   flux-setup:
     name: Gitops Configuration
     env:
@@ -38,7 +37,7 @@ jobs:
       - name: AKS Context
         uses: azure/aks-set-context@v1
         with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
           cluster-name: ${{ env.CLUSTER_NAME }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
 
@@ -1933,9 +1932,8 @@ jobs:
       - name: GitOps CheckIn
         uses: EndBug/add-and-commit@v7
         with:
-          message: 'Initialize Software Install'
-          add: '.'
-
+          message: "Initialize Software Install"
+          add: "."
 
   install-airflow:
     name: Airflow Installation
@@ -1963,7 +1961,7 @@ jobs:
       - name: AKS Context
         uses: azure/aks-set-context@v1
         with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+          creds: "${{ secrets.AZURE_CREDENTIALS }}"
           cluster-name: ${{ env.CLUSTER_NAME }}
           resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
 
@@ -2250,7 +2248,6 @@ jobs:
             attempt_counter=$(($attempt_counter+1))
             sleep 30
           done
-
 
       - name: Helm Install
         run: |
