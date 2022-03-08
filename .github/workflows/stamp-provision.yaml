@@ -799,15 +799,15 @@ jobs:
           azcliversion: ${{ env.CLI_VERSION }}
           inlineScript: |
             REGISTRY=$(az acr list -g $GROUP --query [0].name -otsv)
-            jq -c '.[]' $GITHUB_WORKSPACE/configuration/image_map.json | while read i; do
+            jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | while read i; do
               NAME=$(echo $i | jq -r '.name')
               IMAGE=$(echo $i | jq -r '.image')
               echo "Upload $IMAGE"
               az acr import \
                 --name $REGISTRY \
                 --source $IMAGE \
-                --image $NAME:$OSDU_VERSION
-                # --force --no-wait
+                --image $NAME:$OSDU_VERSION \
+                --force --no-wait
             done
 
             az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force --no-wait
