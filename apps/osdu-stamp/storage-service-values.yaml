@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: storage
       repository: osduselfcpldcesvetcr.azurecr.io/storage
-      tag: 
+      tag: 0.13.0
       path: /api/storage/v2/*
       probe:
         path: /actuator/health

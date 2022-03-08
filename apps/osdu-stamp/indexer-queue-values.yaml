@@ -9,7 +9,7 @@ spec:
     configuration:
     - service: indexer-queue
       repository: osduselfcpldcesvetcr.azurecr.io/indexer-queue
-      tag: 
+      tag: 0.13.0
       keyvault: true
       request:
         cpu: 1000m

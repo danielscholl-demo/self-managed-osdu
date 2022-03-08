@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: search
       repository: osduselfcpldcesvetcr.azurecr.io/search
-      tag: 
+      tag: 0.13.0
       path: /api/search/v2/*
       probe:
         path: /api/search/v2/swagger-ui.html

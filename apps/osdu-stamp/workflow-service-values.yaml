@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: workflow
       repository: osduselfcpldcesvetcr.azurecr.io/workflow
-      tag: 
+      tag: 0.13.0
       path: /api/workflow/*
       probe:
         path: /api/workflow/swagger-ui.html

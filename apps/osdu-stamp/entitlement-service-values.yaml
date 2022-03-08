@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: entitlements
       repository: osduselfcpldcesvetcr.azurecr.io/entitlements
-      tag: 
+      tag: 0.13.0
       path: /api/entitlements/v2/*
       probe:
         path: /api/entitlements/v2/_ah/readiness_check

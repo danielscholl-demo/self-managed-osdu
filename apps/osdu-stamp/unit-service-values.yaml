@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: unit
       repository: osduselfcpldcesvetcr.azurecr.io/unit
-      tag: 
+      tag: 0.13.0
       path: /api/unit/*
       probe:
         path: /api/unit/_ah/readiness_check

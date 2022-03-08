@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: partition
       repository: osduselfcpldcesvetcr.azurecr.io/partition
-      tag: 
+      tag: 0.13.0
       path: /api/partition/v1/*
       probe:
         path: /actuator/health

@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: crs-catalog
       repository: osduselfcpldcesvetcr.azurecr.io/crs-catalog
-      tag: 
+      tag: 0.12.2
       path: /api/crs/catalog/*
       probe:
         path: /api/crs/catalog/swagger-ui.html

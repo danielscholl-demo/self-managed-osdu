@@ -30,7 +30,7 @@ spec:
         value: "80"
     - service: seismic-ddms
       repository: osduselfcpldcesvetcr.azurecr.io/sdms
-      tag: 
+      tag: 0.13.0
       path: /seistore-svc/api/v3/*
       probe:
         path: /seistore-svc/api/v3/svcstatus

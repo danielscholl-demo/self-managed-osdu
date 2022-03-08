@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: crs-conversion
       repository: osduselfcpldcesvetcr.azurecr.io/crs-conversion
-      tag: 
+      tag: 0.12.0
       path: /api/crs/converter/*
       probe:
         path: /api/crs/converter/swagger-ui.html

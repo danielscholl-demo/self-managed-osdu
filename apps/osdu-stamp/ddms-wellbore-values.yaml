@@ -42,7 +42,7 @@ spec:
         value: INFO
     - service: wellbore-ddms
       repository: osduselfcpldcesvetcr.azurecr.io/wellbore-ddms
-      tag: 
+      tag: 0.13.0
       path: /api/os-wellbore-ddms/*
       probe:
         path: /api/os-wellbore-ddms/healthz

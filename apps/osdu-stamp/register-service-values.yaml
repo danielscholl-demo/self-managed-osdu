@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: register
       repository: osduselfcpldcesvetcr.azurecr.io/register
-      tag: 
+      tag: 0.12.1
       path: /api/register/v1/*
       probe:
         path: /api/register/v1/actuator/health

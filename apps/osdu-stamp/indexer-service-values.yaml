@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: indexer
       repository: osduselfcpldcesvetcr.azurecr.io/indexer
-      tag: 
+      tag: 0.13.0
       path: /api/indexer/v2/*
       probe:
         path: /api/indexer/v2/swagger-ui.html

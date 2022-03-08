@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: dataset
       repository: osduselfcpldcesvetcr.azurecr.io/dataset
-      tag: 
+      tag: 0.13.0
       path: /api/dataset/*
       probe:
         path: /actuator/health

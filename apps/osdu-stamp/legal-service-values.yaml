@@ -11,7 +11,7 @@ spec:
     configuration:
     - service: legal
       repository: osduselfcpldcesvetcr.azurecr.io/legal
-      tag: 
+      tag: 0.13.0
       path: /api/legal/v1/*
       probe:
         path: /actuator/health
