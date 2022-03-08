@@ -375,7 +375,7 @@ jobs:
 
       - name: Create Helm Values - partition-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "partition")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "partition")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/partition-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -452,7 +452,7 @@ jobs:
 
       - name: Create Helm Values - entitlement-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "entitlements")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "entitlements")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/entitlement-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -526,7 +526,7 @@ jobs:
 
       - name: Create Helm Values - legal-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "legal")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "legal")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/legal-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -618,7 +618,7 @@ jobs:
 
       - name: Create Helm Values - storage-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "storage")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "storage")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/storage-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -728,7 +728,7 @@ jobs:
 
       - name: Create Helm Values - schema-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "schema")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "schema")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/schema-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -809,7 +809,7 @@ jobs:
 
       - name: Create Helm Values - file-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "file")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "file")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/file-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -906,7 +906,7 @@ jobs:
 
       - name: Create Helm Values - dataset-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "dataset")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "dataset")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/dataset-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -990,7 +990,7 @@ jobs:
 
       - name: Create Helm Values - indexer-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "indexer")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "indexer")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/indexer-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1083,7 +1083,7 @@ jobs:
 
       - name: Create Helm Values - indexer-queue
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "indexer-queue")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "indexer-queue")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/indexer-queue-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1157,7 +1157,7 @@ jobs:
 
       - name: Create Helm Values - search-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "search")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "search")' | jq -r '.tag')
           APP_INSIGHTS_KEY=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/appinsights-key --query value -otsv)
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/search-service-values.yaml << EOF
           ---
@@ -1264,6 +1264,7 @@ jobs:
 
       - name: Create Helm Values - notification-service
         run: |
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "notification")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/notification-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1357,7 +1358,7 @@ jobs:
 
       - name: Create Helm Values - register-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "register")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "register")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/register-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1434,7 +1435,7 @@ jobs:
 
       - name: Create Helm Values - unit-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "unit")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "unit")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/unit-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1504,7 +1505,7 @@ jobs:
 
       - name: Create Helm Values - crs-catalog
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "crs-catalog")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "crs-catalog")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/crs-catalog-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1574,7 +1575,7 @@ jobs:
 
       - name: Create Helm Values - crs-conversion
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "crs-conversion")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "crs-conversion")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/crs-conversion-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1650,7 +1651,7 @@ jobs:
 
       - name: Create Helm Values - wks-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "wks")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "wks")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/wks-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1730,7 +1731,7 @@ jobs:
 
       - name: Create Helm Values - workflow-service
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "workflow")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "workflow")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/workflow-service-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1832,7 +1833,7 @@ jobs:
 
       - name: Create Helm Values - ddms-seismic
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "sdms")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "sdms")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/ddms-seismic-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
@@ -1894,7 +1895,7 @@ jobs:
 
       - name: Create Helm Values - ddms-wellbore
         run: |
-          TAG=$(cat release_${OSDU_VERSION}.json | jq -c '.[] | select( .name == "wellbore-ddms")' | jq -r '.tag')
+          TAG=$(cat $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | jq -c '.[] | select( .name == "wellbore-ddms")' | jq -r '.tag')
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/ddms-wellbore-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
