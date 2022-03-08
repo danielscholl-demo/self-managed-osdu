@@ -806,8 +806,8 @@ jobs:
               az acr import \
                 --name $REGISTRY \
                 --source $IMAGE \
-                --image $NAME:$OSDU_VERSION \
-                --force --no-wait
+                --image $NAME:$OSDU_VERSION
+                # --force --no-wait
             done
 
             az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force --no-wait
