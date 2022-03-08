@@ -132,7 +132,7 @@ jobs:
         run: |
           if [ ! -z $(helm status dev-sample-env-tool -n dev-sample -o json |jq -r ".info.status") ]
           then
-            flux delete helmrelease dev-sample-env-tool -n dev-sample --silent
+            flux delete helmrelease env-tool -n dev-sample --silent
           fi
           if [ ! -z $(helm status token-service -n dev-sample -o json |jq -r ".info.status") ]
           then
