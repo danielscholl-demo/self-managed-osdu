@@ -799,40 +799,15 @@ jobs:
           azcliversion: ${{ env.CLI_VERSION }}
           inlineScript: |
             REGISTRY=$(az acr list -g $GROUP --query [0].name -otsv)
-            IMAGES=('partition          community.opengroup.org:5555/osdu/platform/system/partition/partition-v$OSDU_VERSION' \
-                    'entitlements       community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v$OSDU_VERSION' \
-                    'legal              community.opengroup.org:5555/osdu/platform/security-and-compliance/legal/legal-v$OSDU_VERSION' \
-                    'schema             community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-v$OSDU_VERSION' \
-                    'storage            community.opengroup.org:5555/osdu/platform/system/storage/storage-v$OSDU_VERSION' \
-                    'file               community.opengroup.org:5555/osdu/platform/system/file/file-v$OSDU_VERSION' \
-                    'dataset            community.opengroup.org:5555/osdu/platform/system/dataset/dataset-v$OSDU_VERSION' \
-                    'indexer            community.opengroup.org:5555/osdu/platform/system/indexer-service/indexer-service-v$OSDU_VERSION' \
-                    'indexer-queue      community.opengroup.org:5555/osdu/platform/system/indexer-queue/indexer-queue-v$OSDU_VERSION' \
-                    'search             community.opengroup.org:5555/osdu/platform/system/search-service/search-service-v$OSDU_VERSION' \
-                    'register           community.opengroup.org:5555/osdu/platform/system/register/register-v$OSDU_VERSION' \
-                    'notification       community.opengroup.org:5555/osdu/platform/system/notification/notification-v$OSDU_VERSION' \
-                    'unit               community.opengroup.org:5555/osdu/platform/system/reference/unit-service/unit-service-v$OSDU_VERSION' \
-                    'crs-catalog        community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-v$OSDU_VERSION' \
-                    'crs-conversion     community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-v$OSDU_VERSION' \
-                    'wks                community.opengroup.org:5555/osdu/platform/data-flow/enrichment/wks/wks-v$OSDU_VERSION' \
-                    'workflow           community.opengroup.org:5555/osdu/platform/data-flow/ingestion/ingestion-workflow/ingestion-workflow-v$OSDU_VERSION' \
-                    'wellbore-ddms      community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services/wellbore-domain-services-v$OSDU_VERSION' \
-                    'sdms               community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service/seismic-store-service-v0-11-0' \
-                    'schema-load        community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-release-0-13' \
-                    'csv-parser         community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/osdu-bootstrap-csv-parser:v$OSDU_VERSION' \
-                    'segy-to-zgy-conversion-dag     community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/osdu-bootstrap-segy-to-zgy:v0.13.1' \
-                    'segy-to-vds-conversion-dag     community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-vds-conversion/osdu-bootstrap-segy:v$OSDU_VERSION' )
-
-            for IMAGE in "${IMAGES[@]}"
-            do
-              IMAGE_NAME=$(echo $IMAGE |awk '{print $1})
-              IMAGE_PATH=$(echo $IMAGE |awk '{print $2})
-              echo "Upload $IMAGE_PATH"
+            jq -c '.[]' $GITHUB_WORKSPACE/configuration/image_map.json | while read i; do
+              NAME=$(echo $i | jq -r '.name')
+              IMAGE=$(echo $i | jq -r '.image')
+              echo "Upload $IMAGE"
               az acr import \
-              --name $REGISTRY \
-              --source IMAGE_PATH \
-              --image $IMAGE_NAME:$OSDU_VERSION \
-              --force --no-wait
+                --name $REGISTRY \
+                --source $IMAGE \
+                --image $NAME:$OSDU_VERSION \
+                --force --no-wait
             done
 
             az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force --no-wait
