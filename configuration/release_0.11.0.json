@@ -5,86 +5,86 @@
   },
   {
     "name": "entitlements",
-    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0-11-0:latest"
   },
   {
     "name": "legal",
-    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/legal/legal-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/legal/legal-v0-11-0:latest"
   },
   {
     "name": "schema",
-    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-v0-11-1:latest"
   },
   {
     "name": "storage",
-    "image": "community.opengroup.org:5555/osdu/platform/system/storage/storage-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/storage/storage-v0-11-0:latest"
   },
   {
     "name": "file",
-    "image": "community.opengroup.org:5555/osdu/platform/system/file/file-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/file/file-v0-11-0:latest"
   },
   {
     "name": "dataset",
-    "image": "community.opengroup.org:5555/osdu/platform/system/dataset/dataset-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/dataset/v0-11-0:94bbd5f86b3e3828607af98544b3ee17d3e55a27"
   },
   {
     "name": "indexer",
-    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-service/indexer-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-service/indexer-service-v0-11-0:latest"
   },
   {
     "name": "indexer-queue",
-    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-queue/indexer-queue-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-queue/indexer-queue-v0-11-0:latest"
   },
   {
     "name": "search",
-    "image": "community.opengroup.org:5555/osdu/platform/system/search-service/search-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/search-service/search-service-v0-11-0:latest"
   },
   {
     "name": "register",
-    "image": "community.opengroup.org:5555/osdu/platform/system/register/register-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/register/register-v0-11-0:latest"
   },
   {
     "name": "unit",
-    "image": "community.opengroup.org:5555/osdu/platform/system/reference/unit-service/unit-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/unit-service/unit-service-v0-11-0:latest"
   },
   {
     "name": "crs-catalog",
-    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-v0-11-0:latest"
   },
   {
     "name": "crs-conversion",
-    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-v0-11-0:latest"
   },
   {
     "name": "wks",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/enrichment/wks/wks-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/enrichment/wks/wks-v0-11-0:latest"
   },
   {
     "name": "workflow",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/ingestion-workflow/ingestion-workflow-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/ingestion-workflow/ingestion-workflow-v0-11-0:latest"
   },
   {
     "name": "wellbore-ddms",
-    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services/wellbore-domain-services-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services/wellbore-domain-services-v0-11-1:latest"
   },
   {
     "name": "sdms",
-    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service/seismic-dms-file-metadata-service-release-0-11:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service/seismic-store-service-release-0-11:latest"
   },
   {
     "name": "schema-load",
-    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-release-0-11"
+    "image": "msosdu.azurecr.io/schema-load:0.11.0"
   },
   {
     "name": "csv-parser",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/osdu-bootstrap-csv-parser:v0.11.0"
+    "image": "msosdu.azurecr.io/csv-parser:0.11.0"
   },
   {
     "name": "segy-to-zgy-conversion-dag",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/osdu-bootstrap-segy-to-zgy:v0.11.0"
+    "image": "msosdu.azurecr.io/segy-to-zgy-conversion-dag:0.11.0"
   },
   {
     "name": "segy-to-vds-conversion-dag",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-vds-conversion/osdu-bootstrap-segy:v0.11.0"
+    "image": "msosdu.azurecr.io/segy-to-vds-conversion-dag:0.11.0"
   }
 ]

@@ -44,6 +44,10 @@
     "image": "community.opengroup.org:5555/osdu/platform/system/register/register-release-0-13:latest"
   },
   {
+    "name": "notification",
+    "image": "community.opengroup.org:5555/osdu/platform/system/notification/notification-release-0-13:latest"
+  },
+  {
     "name": "unit",
     "image": "community.opengroup.org:5555/osdu/platform/system/reference/unit-service/unit-service-release-0-13:latest"
   },
@@ -73,7 +77,7 @@
   },
   {
     "name": "schema-load",
-    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-release-0-13"
+    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-v0-13-1:6c20d492df313c7e013bd6b1d7375c9550b42a05"
   },
   {
     "name": "csv-parser",
