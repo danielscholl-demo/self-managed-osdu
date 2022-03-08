@@ -41,7 +41,7 @@
   },
   {
     "name": "register",
-    "image": "community.opengroup.org:5555/osdu/platform/system/register/register-release-0-13:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/register/register-v0-12-1:latest"
   },
   {
     "name": "notification",
@@ -53,11 +53,11 @@
   },
   {
     "name": "crs-catalog",
-    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-release-0-13:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-v0-12-2:latest"
   },
   {
     "name": "crs-conversion",
-    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-release-0-13:latest"
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-v0-12-0:latest"
   },
   {
     "name": "wks",
