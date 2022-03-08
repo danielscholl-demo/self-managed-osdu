@@ -5,7 +5,7 @@ __Community Images__
 | Service | Image | SHA/Tag |
 | ------- | ----- | ------- |
 | Partition      | community.opengroup.org:5555/osdu/platform/system/partition/partition-v0-13-0 | [fb928c3c1a0af40d0de5eae98a9e22a5f296ed04](https://community.opengroup.org/osdu/platform/system/partition/-/tree/v0.13.0) |
-| Entitlements   | community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0-13-0 | [4f8e1ee2987bd86df05e06b9b16f165d70e82028](https://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/v0.13.0) |
+| Entitlements   | community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0-13-0 | [f310bb39c46a13440cc6072919a97ad37d829dc8](hhttps://community.opengroup.org/osdu/platform/security-and-compliance/entitlements/-/tree/v0.13.2) |
 | Legal          | community.opengroup.org:5555/osdu/platform/security-and-compliance/legal/legal-v0-13-0 | [931386b7bf7373a2b511b851f6582846e22310c2](https://community.opengroup.org/osdu/platform/security-and-compliance/legal/-/tree/v0.13.0) |
 | Schema         | community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-v0-13-0 | [83ae6d53e9400b7d27a9c5fe93081196a3abdbe2](https://community.opengroup.org/osdu/platform/system/schema-service/-/tree/v0.13.0) |
 | Storage        | community.opengroup.org:5555/osdu/platform/system/storage/storage-v0-13-0 | [b0ad3d2afb185a1183983e5bfb4b4482b21a207f](https://community.opengroup.org/osdu/platform/system/storage/-/tree/v0.13.0) |

@@ -1,7 +1,11 @@
 [
   {
+    "name": "partition",
+    "image": "community.opengroup.org:5555/osdu/platform/system/partition/partition-v0-13-0"
+  },
+  {
     "name": "entitlements",
-    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0.13.0"
+    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0-13-2"
   },
   {
     "name": "legal",
