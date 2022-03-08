@@ -802,7 +802,7 @@ jobs:
             jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | while read i; do
               NAME=$(echo $i | jq -r '.name')
               IMAGE=$(echo $i | jq -r '.image')
-              TAG=$(echo $i | jq -r '.image')
+              TAG=$(echo $i | jq -r '.tag')
               echo "Upload $IMAGE"
               az acr import \
                 --name $REGISTRY \
