@@ -7,7 +7,7 @@ env:
   CLI_VERSION: 2.30.0
   CLUSTER: osdu-stamp
 
-  OSDU_VERSION: v0.13.0
+  OSDU_VERSION: 0.13.0
   PARTITION_NAME: opendes
 
 jobs:
