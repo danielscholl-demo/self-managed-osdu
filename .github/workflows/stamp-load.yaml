@@ -193,26 +193,30 @@ jobs:
 
       - name: Install Docker Workflows
         run: |
+          CSV_IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep csv-parser | jq -r .image)
+          ZGY_IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-zgy-conversion-dag | jq -r .image)
+          VDS_IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-vds-conversion-dag | jq -r .image)
+
           if [ ${INSTALL_CSV} != false ];
           then
             docker run \
               --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$OSDU_VERSION \
               --env-file .env \
-              msosdu.azurecr.io/csv-parser-dag:$OSDU_VERSION;
+              $CSV_IMAGE
           fi
           if [ ${INSTALL_ZGY} != false ];
           then
             docker run \
               --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$OSDU_VERSION \
               --env-file .env \
-              msosdu.azurecr.io/segy-to-zgy-conversion-dag:$OSDU_VERSION;
+              $ZGY_IMAGE
           fi
           if [ ${INSTALL_VDS} != false ];
           then
             docker run \
               --env DAG_TASK_IMAGE=${REGISTRY}/vds_dag:$OSDU_VERSION \
               --env-file .env \
-              msosdu.azurecr.io/segy-to-vds-conversion-dag:$OSDU_VERSION;
+              $VDS_DAG
           fi
 
       - name: Install File Share Workflows
