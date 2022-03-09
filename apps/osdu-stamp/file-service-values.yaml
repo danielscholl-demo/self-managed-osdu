@@ -14,8 +14,8 @@ spec:
       tag: 0.13.0
       path: /api/file/*
       probe:
-        path: /api/file/v2/readiness_check
-        port: http
+        path: /actuator/health
+        port: 8081
       keyvault: true
       auth:
         disable:

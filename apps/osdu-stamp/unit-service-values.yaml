@@ -14,8 +14,8 @@ spec:
       tag: 0.13.0
       path: /api/unit/*
       probe:
-        path: /api/unit/_ah/readiness_check
-        port: http
+        path: /actuator/health
+        port: 8081
       keyvault: true
       auth:
         disable:

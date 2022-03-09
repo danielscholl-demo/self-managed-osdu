@@ -14,8 +14,8 @@ spec:
       tag: 0.13.0
       path: /api/workflow/*
       probe:
-        path: /api/workflow/swagger-ui.html
-        port: http
+        path: /actuator/health
+        port: 8081
       keyvault: true
       auth:
         disable:
@@ -94,3 +94,22 @@ spec:
         secret:
           name: airflow
           key: azurestorageaccountkey
+      - name: postgres_name
+        secret:
+          name: postgres
+          key: postgres-name
+      - name: postgres_username
+        secret:
+          name: postgres
+          key: postgres-username
+      - name: postgres_password
+        secret:
+          name: postgres
+          key: postgres-password
+      - name: postgres_port
+        value: "5432"
+      - name: postgres_db
+        value: "airflow"
+      - name: OSDU_AIRFLOW_VERSION2_ENABLED
+        value: "false"
+
