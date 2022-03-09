@@ -99,5 +99,5 @@ output "redis_queue_ssl_port" {
 
 output "elastic_search_password" {
   sensitive = true
-  value     = module.elastic_user_secret
+  value     = module.elastic_user_secret.result
 }
