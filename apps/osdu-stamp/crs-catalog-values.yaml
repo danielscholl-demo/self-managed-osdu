@@ -7,10 +7,10 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dpldcedb-1iki-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplbjdab-wbzz-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: crs-catalog
-      repository: osduselfcpldcesvetcr.azurecr.io/crs-catalog
+      repository: osduselfcplbjdxjamcr.azurecr.io/crs-catalog
       tag: 0.12.2
       path: /api/crs/catalog/*
       probe:

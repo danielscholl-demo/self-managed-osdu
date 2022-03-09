@@ -8,7 +8,7 @@ spec:
   values:
     configuration:
     - service: indexer-queue
-      repository: osduselfcpldcesvetcr.azurecr.io/indexer-queue
+      repository: osduselfcplbjdxjamcr.azurecr.io/indexer-queue
       tag: 0.13.0
       keyvault: true
       request:
