@@ -98,10 +98,7 @@ jobs:
       - name: Load Common Schema
         run: |
           IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep schema-load | jq -r .image)
-          TAG=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep schema-load | jq -r .tag)
-          echo $IMAGE
-          echo $TAG
-          #docker run --env-file .env $IMAGE:$TAG
+          docker run --env-ile .env $IMAGE
 
   initialize-workflow:
     name: Workflow Load
