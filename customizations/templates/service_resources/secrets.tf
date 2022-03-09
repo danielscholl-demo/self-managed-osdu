@@ -203,7 +203,7 @@ resource "azurerm_key_vault_secret" "postgres_name" {
 
 resource "azurerm_key_vault_secret" "postgres_username" {
   name         = local.postgres_username_name
-  value        = module.postgreSQL.username
+  value        = var.postgres_username
   key_vault_id = data.terraform_remote_state.central_resources.outputs.keyvault_id
 }
 
