@@ -7,10 +7,10 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dpldcedb-1iki-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplbjdab-wbzz-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: entitlements
-      repository: osduselfcpldcesvetcr.azurecr.io/entitlements
+      repository: osduselfcplbjdxjamcr.azurecr.io/entitlements
       tag: 0.13.0
       path: /api/entitlements/v2/*
       probe:

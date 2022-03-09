@@ -7,10 +7,10 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dpldcedb-1iki-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplbjdab-wbzz-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: crs-conversion
-      repository: osduselfcpldcesvetcr.azurecr.io/crs-conversion
+      repository: osduselfcplbjdxjamcr.azurecr.io/crs-conversion
       tag: 0.12.0
       path: /api/crs/converter/*
       probe:
