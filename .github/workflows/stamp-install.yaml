@@ -472,6 +472,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -748,6 +751,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -829,6 +835,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -1010,6 +1019,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -1178,6 +1190,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 request:
                   cpu: 500m
@@ -1376,8 +1391,11 @@ jobs:
                 tag: $TAG
                 path: /api/register/v1/*
                 probe:
-                  path: /api/register/v1/actuator/health
-                  port: http
+                  path: /actuator/health
+                  port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -1455,6 +1473,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
@@ -1751,6 +1772,9 @@ jobs:
                 probe:
                   path: /actuator/health
                   port: 8081
+                  liveness:
+                    delay: 250
+                    seconds: 10
                 keyvault: true
                 auth:
                   disable:
