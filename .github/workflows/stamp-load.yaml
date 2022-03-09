@@ -99,7 +99,9 @@ jobs:
         run: |
           IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep schema-load | jq -r .image)
           TAG=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep schema-load | jq -r .tag)
-          docker run --env-file .env $IMAGE:$TAG
+          echo $IMAGE
+          echo $TAG
+          #docker run --env-file .env $IMAGE:$TAG
 
   initialize-workflow:
     name: Workflow Load
