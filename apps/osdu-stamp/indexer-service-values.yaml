@@ -16,6 +16,9 @@ spec:
       probe:
         path: /actuator/health
         port: 8081
+        liveness:
+          delay: 250
+          seconds: 10
       keyvault: true
       auth:
         disable:

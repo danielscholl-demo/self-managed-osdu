@@ -14,8 +14,11 @@ spec:
       tag: 0.12.1
       path: /api/register/v1/*
       probe:
-        path: /api/register/v1/actuator/health
-        port: http
+        path: /actuator/health
+        port: 8081
+        liveness:
+          delay: 250
+          seconds: 10
       keyvault: true
       auth:
         disable:
