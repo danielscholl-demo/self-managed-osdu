@@ -2,7 +2,7 @@
 .Synopsis
    Terraform Main Control
 .DESCRIPTION
-   This file holds the main control and resoures for bootstraping an OSDU Azure Devops Project.
+   This file holds the main control.
 */
 
 terraform {
