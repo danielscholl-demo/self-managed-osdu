@@ -6,6 +6,7 @@ on:
 env:
   CLI_VERSION: 2.30.0
 
+  DAG_VERSION: 0.11.0
   OSDU_VERSION: 0.13.0
   PARTITION_NAME: opendes
 
@@ -200,23 +201,23 @@ jobs:
           if [ ${INSTALL_CSV} != false ];
           then
             docker run \
-              --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$OSDU_VERSION \
+              --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$DAG_VERSION \
               --env-file .env \
-              $CSV_IMAGE
+              msosdu.azurecr.io/csv-parser-dag:$DAG_VERSION;
           fi
           if [ ${INSTALL_ZGY} != false ];
           then
             docker run \
-              --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$OSDU_VERSION \
+              --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$DAG_VERSION \
               --env-file .env \
-              $ZGY_IMAGE
+              msosdu.azurecr.io/segy-to-zgy-conversion-dag:$DAG_VERSION;
           fi
           if [ ${INSTALL_VDS} != false ];
           then
             docker run \
-              --env DAG_TASK_IMAGE=${REGISTRY}/vds_dag:$OSDU_VERSION \
+              --env DAG_TASK_IMAGE=${REGISTRY}/vds_dag:$DAG_VERSION \
               --env-file .env \
-              $VDS_DAG
+              msosdu.azurecr.io/segy-to-vds-conversion-dag:$DAG_VERSION;
           fi
 
       - name: Install File Share Workflows
