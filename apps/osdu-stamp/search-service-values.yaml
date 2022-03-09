@@ -14,8 +14,8 @@ spec:
       tag: 0.13.0
       path: /api/search/v2/*
       probe:
-        path: /api/search/v2/swagger-ui.html
-        port: http
+        path: /actuator/health
+        port: 8081
       keyvault: true
       request:
         cpu: 500m
