@@ -57,5 +57,5 @@ jobs:
                 --name $REGISTRY \
                 --source $IMAGE \
                 --image $NAME:$TAG \
-                --force --no-wait
+                --force
             done
