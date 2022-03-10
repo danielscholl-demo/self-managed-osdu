@@ -1,0 +1,61 @@
+name: "3a. Stamp Images"
+
+on:
+  workflow_dispatch:
+
+env:
+  CLI_VERSION: 2.30.0
+
+  CONTROLPLANE_WORKSPACE: "cpl-${{ secrets.RAND }}"
+  DATAPLANE_WORKSPACE: "dpl-${{ secrets.RAND }}"
+  PARTITION_WORKSPACE: "prt-${{ secrets.RAND }}"
+  DASHBOARD_WORKSPACE: "dash-${{ secrets.RAND }}"
+
+  OSDU_VERSION: 0.13.0
+  PARTITION_NAME: opendes
+  IMAGE_TAG: latest
+
+jobs:
+  image-data:
+    name: Load ACR - Images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Retrieve Env Variables
+        uses: Azure/cli@1.0.4
+        with:
+          azcliversion: ${{ env.CLI_VERSION }}
+          inlineScript: |
+            GROUP=$(az group list --query "[?contains(name, 'cpl${{ secrets.RAND }}')].name" -otsv)
+            ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
+            CLIENT_ID=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
+            TENANT_ID=$(az account show --query tenantId -otsv)
+            DP_GROUP=$(az group list --query "[?contains(name, 'dpl${{ secrets.RAND }}')].name" -otsv |grep -v MC)
+            DNS_HOST=$(az network public-ip list --resource-group $DP_GROUP --query [].dnsSettings.fqdn -otsv)
+
+            echo "GROUP=$GROUP" >> $GITHUB_ENV
+            echo "CLIENT_ID=$CLIENT_ID" >> $GITHUB_ENV
+            echo "TENANT_ID=$TENANT_ID" >> $GITHUB_ENV
+            echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
+
+      - name: Push OSDU Images
+        uses: Azure/cli@1.0.4
+        with:
+          azcliversion: ${{ env.CLI_VERSION }}
+          inlineScript: |
+            REGISTRY=$(az acr list -g $GROUP --query [0].name -otsv)
+            jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json | while read i; do
+              NAME=$(echo $i | jq -r '.name')
+              IMAGE=$(echo $i | jq -r '.image')
+              TAG=$(echo $i | jq -r '.tag')
+              echo "Upload $IMAGE"
+              az acr import \
+                --name $REGISTRY \
+                --source $IMAGE \
+                --image $NAME:$TAG \
+                --force --no-wait
+            done

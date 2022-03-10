@@ -102,8 +102,7 @@
   {
     "name": "csv-parser-loader",
     "tag": "0.13.0",
-    "image": "msosdu.azurecr.io/csv-parser-dag:0.11.0",
-    "v13": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-dag-v0-13-0:cfd8e79cb4088be679c0e3c9ae7c25888d7ec2bb"
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-dag-v0-13-0:cfd8e79cb4088be679c0e3c9ae7c25888d7ec2bb"
   },
   {
     "name": "csv-parser",
