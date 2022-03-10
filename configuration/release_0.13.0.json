@@ -96,22 +96,37 @@
   },
   {
     "name": "schema-load",
-    "tag": "0.13.1",
+    "tag": "0.13.0",
     "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-v0-13-1:6c20d492df313c7e013bd6b1d7375c9550b42a05"
   },
   {
-    "name": "csv-parser-dag",
+    "name": "csv-parser-loader",
     "tag": "0.13.0",
     "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-dag-v0-13-0:cfd8e79cb4088be679c0e3c9ae7c25888d7ec2bb"
   },
   {
-    "name": "segy-to-zgy-conversion-dag",
-    "tag": "0.13.1",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/osdu-bootstrap-segy-to-zgy:v0.13.1"
+    "name": "csv-parser",
+    "tag": "0.13.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-v0-13-0:cfd8e79cb4088be679c0e3c9ae7c25888d7ec2bb"
   },
   {
-    "name": "segy-to-vds-conversion-dag",
+    "name": "segy-to-zgy-conversion-loader",
     "tag": "0.13.0",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-vds-conversion/osdu-bootstrap-segy:v0.13.0"
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-dag-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
+  },
+  {
+    "name": "segy-to-zgy-conversion",
+    "tag": "0.13.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
+  },
+  {
+    "name": "segy-to-vds-conversion-loader",
+    "tag": "0.13.0",
+    "image": "msosdu.azurecr.io/segy-to-vds-conversion-dag:0.11.0"
+  },
+  {
+    "name": "segy-to-vds-conversion",
+    "tag": "0.13.0",
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/open-vds/openvds-ingestion:2.1.12"
   }
 ]
