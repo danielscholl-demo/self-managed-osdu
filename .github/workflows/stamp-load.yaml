@@ -190,7 +190,7 @@ jobs:
             if [ "${ZGY_RESULT}" == "404" ]; then echo "INSTALL_ZGY=true" >> $GITHUB_ENV; fi
             if [ "${VDS_RESULT}" == "404" ]; then echo "INSTALL_VDS=true" >> $GITHUB_ENV; fi
 
-      - name: Install Docker Workflows
+      - name: Install CSV Parser DAG
         run: |
           if [ ${INSTALL_CSV} != false ];
           then
@@ -201,6 +201,9 @@ jobs:
               --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$(echo $DAG | jq -r .tag) \
               --env-file .env $(echo $LOADER | jq -r .image)
           fi
+
+      - name: Install SEGY to ZGY Converter DAG
+        run: |
           if [ ${INSTALL_ZGY} != false ];
           then
             LOADER=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
@@ -210,6 +213,9 @@ jobs:
               --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$(echo $DAG | jq -r .tag) \
               --env-file .env $(echo $LOADER | jq -r .image)
           fi
+
+      - name: Install SEGY to VDS Converter DAG
+        run: |
           if [ ${INSTALL_VDS} != false ];
           then
             LOADER=$(jq -c '.[] |select( .name == "segy-to-vds-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
