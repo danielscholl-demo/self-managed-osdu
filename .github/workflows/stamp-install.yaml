@@ -349,7 +349,7 @@ jobs:
                 replicaCount: 1
                 env:
                 - name: TITLE
-                  value: "Self Managed OSDU - (v0.11)"
+                  value: "Self Managed OSDU - ($OSDU_VERSION)"
           EOF
 
       - name: Create Helm Values - token-service

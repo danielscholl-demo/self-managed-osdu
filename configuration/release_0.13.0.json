@@ -108,8 +108,8 @@
   {
     "name": "csv-parser",
     "tag": "0.13.0",
-    "image": "msosdu.azurecr.io/csv-parser-dag:0.11.0",
-    "v11": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-v0-11-0:719ebd7262acf2069dad1f7839d7bce222c88fe8"
+    "oak": "msosdu.azurecr.io/csv-parser:0.11.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-v0-11-0:719ebd7262acf2069dad1f7839d7bce222c88fe8"
   },
   {
     "name": "segy-to-zgy-conversion-loader",
@@ -120,8 +120,8 @@
   {
     "name": "segy-to-zgy-conversion",
     "tag": "0.13.0",
-    "image": "msosdu.azurecr.io/segy-to-zgy-conversion:0.11.0",
-    "v13": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
+    "v11": "msosdu.azurecr.io/segy-to-zgy-conversion:0.11.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
   },
   {
     "name": "segy-to-vds-conversion-loader",
