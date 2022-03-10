@@ -194,33 +194,31 @@ jobs:
         run: |
           if [ ${INSTALL_CSV} != false ];
           then
-            LOADER_IMAGE=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep csv-parser-loader | jq -r .image)
-            TAG=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep csv-parser | jq -r .tag)
+            LOADER=$(jq -c '.[] |select( .name == "csv-parser-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            DAG=$(jq -c '.[] |select( .name == "csv-parser" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
 
-            echo $LOADER_IMAGE
-            echo ${REGISTRY}/csv-parser:$TAG
             docker run \
-              --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$TAG \
-              --env-file .env $LOADER_IMAGE
+              --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$(echo $DAG | jq -r .tag) \
+              --env-file .env $(echo $LOADER | jq -r .image)
           fi
-          # if [ ${INSTALL_ZGY} != false ];
-          # then
-          #   DAG_LOADER=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-zgy-conversion-loader | jq -r .image)
-          #   TAG=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-zgy-conversion | jq -r .tag)
+          if [ ${INSTALL_ZGY} != false ];
+          then
+            LOADER=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            DAG=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
 
-          #   docker run \
-          #     --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$TAG \
-          #     --env-file .env $DAG_LOADER
-          # fi
-          # if [ ${INSTALL_VDS} != false ];
-          # then
-          #   DAG_LOADER=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-vds-conversion-loader | jq -r .image)
-          #   TAG=$(jq -c '.[]' $GITHUB_WORKSPACE/configuration/release_$OSDU_VERSION.json |grep segy-to-vds-conversion | jq -r .tag)
+            docker run \
+              --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$(echo $DAG | jq -r .tag) \
+              --env-file .env $(echo $LOADER | jq -r .image)
+          fi
+          if [ ${INSTALL_VDS} != false ];
+          then
+            LOADER=$(jq -c '.[] |select( .name == "segy-to-vds-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            DAG=$(jq -c '.[] |select( .name == "segy-to-vds-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
 
-          #   docker run \
-          #     --env DAG_TASK_IMAGE=${REGISTRY}/segy-to-vds-conversion:$TAG \
-          #     --env-file .env $DAG_LOADER
-          # fi
+            docker run \
+              --env DAG_TASK_IMAGE=${REGISTRY}/segy-to-vds-conversion:$(echo $DAG | jq -r .tag) \
+              --env-file .env $(echo $LOADER | jq -r .image)
+          fi
 
       - name: Install File Share Workflows
         uses: Azure/cli@1.0.4
