@@ -61,7 +61,7 @@ jobs:
             --header 'user-agent: vscode-restclient'
 
   schema-load:
-    name: Common Schema Load
+    name: Schema Load
     runs-on: ubuntu-latest
     needs: initialize-entitlements
     steps:

@@ -17,7 +17,7 @@ env:
 
 jobs:
   image-data:
-    name: Load ACR - Images
+    name: Load Registry - Images
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
