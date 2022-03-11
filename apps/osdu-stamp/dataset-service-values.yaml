@@ -7,11 +7,11 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dplbjdab-wbzz-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplcdefd-js1x-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: dataset
-      repository: osduselfcplbjdxjamcr.azurecr.io/dataset
-      tag: 0.13.0
+      repository: osduselfcplcdeqog3cr.azurecr.io/dataset
+      tag: 
       path: /api/dataset/*
       probe:
         path: /actuator/health
