@@ -1,4 +1,4 @@
-name: "4. Stamp Install"
+name: "5. Stamp Install"
 
 on:
   workflow_dispatch:

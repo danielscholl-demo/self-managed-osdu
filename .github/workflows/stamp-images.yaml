@@ -1,4 +1,4 @@
-name: "3a. Stamp Images"
+name: "4. Stamp Images"
 
 on:
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
             echo "TENANT_ID=$TENANT_ID" >> $GITHUB_ENV
             echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
 
-      - name: Push OSDU Images
+      - name: Push OSDU Images - $OSDU_VERSION
         uses: Azure/cli@1.0.4
         with:
           azcliversion: ${{ env.CLI_VERSION }}
@@ -57,5 +57,5 @@ jobs:
                 --name $REGISTRY \
                 --source $IMAGE \
                 --image $NAME:$TAG \
-                --force --no-wait
+                --force
             done
