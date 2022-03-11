@@ -18,8 +18,8 @@ prefix = "osdu-self"
 
 resource_tags = {
   environment = "Self Managed OSDU"
-  contact = "<your_name>"
-  repo = "https://github.dev/danielscholl/self-managed-osdu"
+  contact     = "Daniel Scholl"
+  repo        = "https://github.dev/danielscholl-demo/self-managed-osdu"
 }
 
 # Network Addressing
@@ -29,7 +29,7 @@ subnet_aks_prefix = "10.10.2.0/23"
 subnet_be_prefix  = "10.10.3.0/28"
 
 # Kubernetes Settings
-kubernetes_version = "1.20.9"
+kubernetes_version = "1.22.6"
 aks_agent_vm_count = "6"
 aks_agent_vm_disk  = 128
 aks_agent_vm_size  = "Standard_E4s_v3"
