@@ -793,16 +793,6 @@ jobs:
             REGISTRY=$(az acr list -g $GROUP --query [0].loginServer -otsv)
             az acr build --registry $REGISTRY --image self-managed-osdu-login:latest -f src/auth_token/Dockerfile src/auth_token
 
-      - name: Push Common Images
-        uses: Azure/cli@1.0.4
-        with:
-          azcliversion: ${{ env.CLI_VERSION }}
-          inlineScript: |
-            REGISTRY=$(az acr list -g $GROUP --query [0].name -otsv)
-
-            az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force
-            az acr import --name $REGISTRY --source msosdu.azurecr.io/airflow-function:1.0.0 --image airflow-function:1.0.0 --force
-
   env-data:
     name: Load KV - Settings
     runs-on: ubuntu-latest

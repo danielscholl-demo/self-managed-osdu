@@ -1,5 +1,15 @@
 [
   {
+    "name": "statsd",
+    "tag": "1.0.0",
+    "image": "msosdu.azurecr.io/statsd:1.0.0"
+  },
+  {
+    "name": "airflow-function",
+    "tag": "1.0.0",
+    "image": "msosdu.azurecr.io/airflow-function:1.0.0"
+  },
+  {
     "name": "partition",
     "tag": "0.13.0",
     "image": "community.opengroup.org:5555/osdu/platform/system/partition/partition-v0-13-0:latest"

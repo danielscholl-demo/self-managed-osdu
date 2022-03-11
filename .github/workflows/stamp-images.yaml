@@ -42,7 +42,7 @@ jobs:
             echo "TENANT_ID=$TENANT_ID" >> $GITHUB_ENV
             echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
 
-      - name: Push OSDU Images - $OSDU_VERSION
+      - name: "Import OSDU Images - $(echo $OSDU_VERSION)"
         uses: Azure/cli@1.0.4
         with:
           azcliversion: ${{ env.CLI_VERSION }}
@@ -52,7 +52,7 @@ jobs:
               NAME=$(echo $i | jq -r '.name')
               IMAGE=$(echo $i | jq -r '.image')
               TAG=$(echo $i | jq -r '.tag')
-              echo "Upload $IMAGE"
+              echo "Import $IMAGE"
               az acr import \
                 --name $REGISTRY \
                 --source $IMAGE \
