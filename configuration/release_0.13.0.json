@@ -132,7 +132,7 @@
   {
     "name": "segy-to-zgy-conversion-loader",
     "tag": "0.11.0",
-    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-dag-v0-11-0",
+    "image": "msosdu.azurecr.io/segy-to-zgy-conversion-dag:0.11.0",
     "v13": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-dag-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
   },
   {
