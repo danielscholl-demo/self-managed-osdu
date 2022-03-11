@@ -56,8 +56,15 @@ module "elasticsearch" {
   memory           = 8
 }
 
-module "elastic_user_secret" {
+resource "time_sleep" "wait_for_install" {
   depends_on = [module.elasticsearch]
+
+  create_duration = "60s"
+}
+
+
+module "elastic_user_secret" {
+  depends_on = [time_sleep.wait_for_install]
   source     = "../../../modules/providers/azure/kubernetes-secret"
 
   name      = "elasticsearch-es-elastic-user"
