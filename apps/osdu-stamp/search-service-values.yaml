@@ -7,11 +7,11 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dplbjdab-wbzz-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplcdefd-js1x-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: search
-      repository: osduselfcplbjdxjamcr.azurecr.io/search
-      tag: 0.13.0
+      repository: osduselfcplcdeqog3cr.azurecr.io/search
+      tag: 
       path: /api/search/v2/*
       probe:
         path: /actuator/health
@@ -46,7 +46,7 @@ spec:
       - name: ACCEPT_HTTP
         value: "true"
       - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-        value: "InstrumentationKey=94959de3-3b44-4739-9724-d31ff6ddabcd"
+        value: "InstrumentationKey=04b28b3d-4b3a-4959-b19e-49828e552d20"
       - name: cosmosdb_database
         value: "osdu-db"
       - name: entitlements_service_endpoint
