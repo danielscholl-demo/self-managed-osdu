@@ -808,11 +808,11 @@ jobs:
                 --name $REGISTRY \
                 --source $IMAGE \
                 --image $NAME:$TAG \
-                --force --no-wait
+                --force
             done
 
-            az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force --no-wait
-            az acr import --name $REGISTRY --source msosdu.azurecr.io/airflow-function:1.0.0 --image airflow-function:1.0.0 --force --no-wait
+            az acr import --name $REGISTRY --source msosdu.azurecr.io/statsd:1.0.0 --image statsd:1.0.0 --force
+            az acr import --name $REGISTRY --source msosdu.azurecr.io/airflow-function:1.0.0 --image airflow-function:1.0.0 --force
 
   env-data:
     name: Load KV - Settings
