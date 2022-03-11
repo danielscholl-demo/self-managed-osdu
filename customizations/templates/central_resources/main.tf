@@ -329,33 +329,33 @@ resource "azurerm_user_assigned_identity" "osduidentity" {
 #-------------------------------
 
 // Lock the KV
-resource "azurerm_management_lock" "kv_lock" {
-  count = var.feature_flag.kv_lock ? 1 : 0
+# resource "azurerm_management_lock" "kv_lock" {
+#   count = var.feature_flag.kv_lock ? 1 : 0
 
-  name       = "osdu_cr_kv_lock"
-  scope      = module.keyvault.keyvault_id
-  lock_level = "CanNotDelete"
-}
+#   name       = "osdu_cr_kv_lock"
+#   scope      = module.keyvault.keyvault_id
+#   lock_level = "CanNotDelete"
+# }
 
-// Lock the Storage
-resource "azurerm_management_lock" "sa_lock" {
-  name       = "osdu_tbl_sa_lock"
-  scope      = module.storage_account.id
-  lock_level = "CanNotDelete"
-}
+# // Lock the Storage
+# resource "azurerm_management_lock" "sa_lock" {
+#   name       = "osdu_tbl_sa_lock"
+#   scope      = module.storage_account.id
+#   lock_level = "CanNotDelete"
+# }
 
-// Lock the Container Registry
-resource "azurerm_management_lock" "acr_lock" {
-  count = var.feature_flag.acr_lock ? 1 : 0
+# // Lock the Container Registry
+# resource "azurerm_management_lock" "acr_lock" {
+#   count = var.feature_flag.acr_lock ? 1 : 0
 
-  name       = "osdu_acr_lock"
-  scope      = module.container_registry.container_registry_id
-  lock_level = "CanNotDelete"
-}
+#   name       = "osdu_acr_lock"
+#   scope      = module.container_registry.container_registry_id
+#   lock_level = "CanNotDelete"
+# }
 
-// Lock the GraphDB
-resource "azurerm_management_lock" "graph_lock" {
-  name       = "osdu_graph_db_lock"
-  scope      = module.graph_account.account_id
-  lock_level = "CanNotDelete"
-}
+# // Lock the GraphDB
+# resource "azurerm_management_lock" "graph_lock" {
+#   name       = "osdu_graph_db_lock"
+#   scope      = module.graph_account.account_id
+#   lock_level = "CanNotDelete"
+# }

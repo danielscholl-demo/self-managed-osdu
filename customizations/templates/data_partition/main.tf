@@ -387,29 +387,29 @@ resource "azurerm_eventgrid_event_subscription" "service_bus_topic_subscriber_gs
 #-------------------------------
 # Locks
 #-------------------------------
-resource "azurerm_management_lock" "sa_lock" {
-  name       = "osdu_ds_sa_lock"
-  scope      = module.storage_account.id
-  lock_level = "CanNotDelete"
-}
+# resource "azurerm_management_lock" "sa_lock" {
+#   name       = "osdu_ds_sa_lock"
+#   scope      = module.storage_account.id
+#   lock_level = "CanNotDelete"
+# }
 
-resource "azurerm_management_lock" "sdms_sa_lock" {
-  name       = "osdu_sdms_sa_lock"
-  scope      = module.sdms_storage_account.id
-  lock_level = "CanNotDelete"
-}
+# resource "azurerm_management_lock" "sdms_sa_lock" {
+#   name       = "osdu_sdms_sa_lock"
+#   scope      = module.sdms_storage_account.id
+#   lock_level = "CanNotDelete"
+# }
 
-resource "azurerm_management_lock" "db_lock" {
-  name       = "osdu_ds_db_lock"
-  scope      = module.cosmosdb_account.properties.cosmosdb.id
-  lock_level = "CanNotDelete"
-}
+# resource "azurerm_management_lock" "db_lock" {
+#   name       = "osdu_ds_db_lock"
+#   scope      = module.cosmosdb_account.properties.cosmosdb.id
+#   lock_level = "CanNotDelete"
+# }
 
-resource "azurerm_management_lock" "ingest_sa_lock" {
-  name       = "osdu_ingest_sa_lock"
-  scope      = module.ingest_storage_account.id
-  lock_level = "CanNotDelete"
-}
+# resource "azurerm_management_lock" "ingest_sa_lock" {
+#   name       = "osdu_ingest_sa_lock"
+#   scope      = module.ingest_storage_account.id
+#   lock_level = "CanNotDelete"
+# }
 
 # Reference (https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_management_policy)
 # Prefix Value (https://stackoverflow.com/questions/65593429/set-lifecycle-management-rule-on-all-blobs-in-a-container)

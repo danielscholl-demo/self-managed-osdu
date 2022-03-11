@@ -579,16 +579,16 @@ resource "azurerm_role_assignment" "cosmos_access" {
 #-------------------------------
 # Locks
 #-------------------------------
-resource "azurerm_management_lock" "sa_lock" {
-  count = var.feature_flag.sa_lock ? 1 : 0
+# resource "azurerm_management_lock" "sa_lock" {
+#   count = var.feature_flag.sa_lock ? 1 : 0
 
-  name       = "osdu_file_share_lock"
-  scope      = module.storage_account.id
-  lock_level = "CanNotDelete"
-}
+#   name       = "osdu_file_share_lock"
+#   scope      = module.storage_account.id
+#   lock_level = "CanNotDelete"
+# }
 
-resource "azurerm_management_lock" "system_sa_lock" {
-  name       = "osdu_system_sa_lock"
-  scope      = module.system_storage_account.id
-  lock_level = "CanNotDelete"
-}
+# resource "azurerm_management_lock" "system_sa_lock" {
+#   name       = "osdu_system_sa_lock"
+#   scope      = module.system_storage_account.id
+#   lock_level = "CanNotDelete"
+# }
