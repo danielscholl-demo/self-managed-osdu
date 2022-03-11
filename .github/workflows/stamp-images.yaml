@@ -17,7 +17,7 @@ env:
 
 jobs:
   image-data:
-    name: Load Registry - Images
+    name: Import Docker Images
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +42,7 @@ jobs:
             echo "TENANT_ID=$TENANT_ID" >> $GITHUB_ENV
             echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
 
-      - name: Import Release Images
+      - name: ACR Import
         uses: Azure/cli@1.0.4
         with:
           azcliversion: ${{ env.CLI_VERSION }}
@@ -53,9 +53,14 @@ jobs:
               IMAGE=$(echo $i | jq -r '.image')
               TAG=$(echo $i | jq -r '.tag')
               echo "Import $IMAGE"
+              echo "--------------------------------------------------------------------------------------------------"
               az acr import \
                 --name $REGISTRY \
                 --source $IMAGE \
                 --image $NAME:$TAG \
                 --force
+              az acr repository show \
+                --name $REGISTRY \
+                --image $NAME:$TAG -ojson
+              echo ""
             done
