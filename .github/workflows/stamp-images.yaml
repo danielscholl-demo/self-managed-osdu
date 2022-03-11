@@ -42,7 +42,7 @@ jobs:
             echo "TENANT_ID=$TENANT_ID" >> $GITHUB_ENV
             echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
 
-      - name: "Import OSDU Images - $(echo $OSDU_VERSION)"
+      - name: Import Release Images
         uses: Azure/cli@1.0.4
         with:
           azcliversion: ${{ env.CLI_VERSION }}
