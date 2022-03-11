@@ -52,6 +52,7 @@ jobs:
               NAME=$(echo $i | jq -r '.name')
               IMAGE=$(echo $i | jq -r '.image')
               TAG=$(echo $i | jq -r '.tag')
+              echo "--------------------------------------------------------------------------------------------------"
               echo "Import $IMAGE"
               echo "--------------------------------------------------------------------------------------------------"
               az acr import \
@@ -62,5 +63,4 @@ jobs:
               az acr repository show \
                 --name $REGISTRY \
                 --image $NAME:$TAG -ojson
-              echo ""
             done
