@@ -6,14 +6,8 @@ on:
 env:
   CLI_VERSION: 2.30.0
 
-  CONTROLPLANE_WORKSPACE: "cpl-${{ secrets.RAND }}"
-  DATAPLANE_WORKSPACE: "dpl-${{ secrets.RAND }}"
-  PARTITION_WORKSPACE: "prt-${{ secrets.RAND }}"
-  DASHBOARD_WORKSPACE: "dash-${{ secrets.RAND }}"
-
   OSDU_VERSION: 0.13.0
-  PARTITION_NAME: opendes
-  IMAGE_TAG: latest
+  INGESTION_DAG_VERSION: 0.12.0
 
 jobs:
   image-data:
@@ -64,3 +58,61 @@ jobs:
                 --name $REGISTRY \
                 --image $NAME:$TAG -ojson
             done
+
+  workflow-data:
+    name: Load Airflow - FileShare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Azure/login@v1.1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Upload Ingestion Manifest
+        env:
+          SERVICE: ingestion-dags
+          FOLDER: src/osdu_dags
+          FILE_SHARE: airflowdags
+        uses: Azure/cli@1.0.4
+        with:
+          azcliversion: ${{ env.CLI_VERSION }}
+          inlineScript: |
+            mkdir ${{ env.RUNNER_TEMP }}/results
+            curl -sSL -o ${{ env.RUNNER_TEMP }}/download.tar.gz https://community.opengroup.org/osdu/platform/data-flow/ingestion/${{ env.SERVICE }}/-/archive/v${{ env.INGESTION_DAG_VERSION }}/${{ env.SERVICE }}-v${{ env.INGESTION_DAG_VERSION }}.tar.gz
+            tar -xzvf ${{ env.RUNNER_TEMP }}/download.tar.gz -C ${{ env.RUNNER_TEMP }}/results --strip-components=3 ${{ env.SERVICE }}-v${{ env.INGESTION_DAG_VERSION }}/${{ env.FOLDER }}
+            cd ${{ env.RUNNER_TEMP }}/results && zip -r ../manifest-ingestion-dags.zip . && cd ..
+
+            GROUP=$(az group list --query "[?contains(name, 'cpl${{ secrets.RAND }}')].name" -otsv)
+            ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
+
+            az storage file upload \
+              --account-name $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage --query value -otsv) \
+              --account-key $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage-key --query value -otsv) \
+              --share-name ${{ env.FILE_SHARE }} \
+              --source ${{ env.RUNNER_TEMP }}/manifest-ingestion-dags.zip
+
+      # - name: Upload Local DAGS
+      #   env:
+      #     FILE_SHARE: airflowdags
+      #   uses: Azure/cli@1.0.4
+      #   with:
+      #     azcliversion: ${{ env.CLI_VERSION }}
+      #     inlineScript: |
+      #       GROUP=$(az group list --query "[?contains(name, 'cpl${{ secrets.RAND }}')].name" -otsv)
+      #       ENV_VAULT=$(az keyvault list --resource-group $GROUP --query [].name -otsv)
+
+      #       az storage file upload-batch \
+      #         --account-name $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage --query value -otsv) \
+      #         --account-key $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage-key --query value -otsv) \
+      #         --destination ${{ env.FILE_SHARE }} \
+      #         --source $GITHUB_WORKSPACE/src/${{ env.FILE_SHARE }} \
+      #         --pattern "*.ini"
+
+      #       az storage file upload-batch \
+      #         --account-name $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage --query value -otsv) \
+      #         --account-key $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/airflow-storage-key --query value -otsv) \
+      #         --destination ${{ env.FILE_SHARE }} \
+      #         --source $GITHUB_WORKSPACE/src/${{ env.FILE_SHARE }} \
+      #         --pattern "*.py"

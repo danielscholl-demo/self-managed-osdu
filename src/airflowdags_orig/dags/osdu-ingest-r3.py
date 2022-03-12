@@ -22,12 +22,12 @@ from airflow import DAG
 from airflow.models import Variable
 from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import BranchPythonOperator
-from osdu_airflow.backward_compatibility.default_args import update_default_args
-from osdu_airflow.operators.ensure_manifest_integrity import EnsureManifestIntegrityOperator
-from osdu_airflow.operators.process_manifest_r3 import ProcessManifestOperatorR3
-from osdu_airflow.operators.update_status import UpdateStatusOperator
-from osdu_airflow.operators.validate_manifest_schema import ValidateManifestSchemaOperator
-from osdu_ingestion.libs.exceptions import NotOSDUSchemaFormatError
+from osdu_api.libs.exceptions import NotOSDUSchemaFormatError
+from osdu_manifest.libs.airflow.backward_compatibility.default_args import update_default_args
+from osdu_manifest.operators.ensure_manifest_integrity import EnsureManifestIntegrityOperator
+from osdu_manifest.operators.process_manifest_r3 import ProcessManifestOperatorR3
+from osdu_manifest.operators.update_status import UpdateStatusOperator
+from osdu_manifest.operators.validate_manifest_schema import ValidateManifestSchemaOperator
 
 BATCH_NUMBER = int(Variable.get("core__ingestion__batch_count", "3"))
 PROCESS_SINGLE_MANIFEST_FILE = "process_single_manifest_file_task"
@@ -70,7 +70,7 @@ with DAG(
     default_args=default_args,
     description="R3 manifest processing with providing integrity",
     schedule_interval=None,
-    dagrun_timeout=timedelta(minutes=180)
+    dagrun_timeout=timedelta(minutes=60)
 ) as dag:
     update_status_running_op = UpdateStatusOperator(
         task_id="update_status_running_task",
