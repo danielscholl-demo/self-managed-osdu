@@ -6,3 +6,4 @@ AZURE_CREDENTIALS
 .DS_Store
 .ssh
 data-load
+airflow_old
