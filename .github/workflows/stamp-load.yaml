@@ -1,4 +1,4 @@
-name: "6. Stamp Load"
+name: "7. Stamp Load"
 
 on:
   workflow_dispatch:

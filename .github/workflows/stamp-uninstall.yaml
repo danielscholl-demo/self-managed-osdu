@@ -1,4 +1,4 @@
-name: "7. Stamp Uninstall"
+name: "8. Stamp Uninstall"
 
 on:
   workflow_dispatch:

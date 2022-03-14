@@ -1,4 +1,4 @@
-name: "5a. Stamp Airflow"
+name: "6. Stamp Airflow"
 
 on:
   workflow_dispatch:

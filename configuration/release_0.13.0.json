@@ -2,7 +2,7 @@
   {
     "name": "statsd",
     "tag": "1.0.0",
-    "image": "msosdu.azurecr.io/statsd:1.0.0"
+    "image": "msosdu.azurecr.io/statsd:1.0.0-OSDU"
   },
   {
     "name": "airflow-function",
