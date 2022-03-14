@@ -128,6 +128,7 @@ jobs:
             variables: |
               {}
           airflow:
+            legacyCommands: false
             image:
               repository: apache/airflow
               tag: 1.10.12-python3.6
@@ -196,6 +197,7 @@ jobs:
               AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
               AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if dag_run.conf is not none and 'correlation_id' in dag_run.conf %}{{ dag_run.conf['correlation_id'] }}{% else %}None{% endif %}/{{ try_number }}.log"
             extraEnv:
+
             - name: AIRFLOW_VAR_AZURE_DNS_HOST
               value: "$DNS_HOST"
             - name: CLOUD_PROVIDER
