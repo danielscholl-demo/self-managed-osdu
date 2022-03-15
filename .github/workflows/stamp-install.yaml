@@ -60,12 +60,18 @@ jobs:
           REGISTRY=$(az acr list -g $GROUP --query [0].loginServer -otsv)
           DP_GROUP=$(az group list --query "[?contains(name, 'dpl${{ secrets.RAND }}')].name" -otsv |grep -v MC)
           DNS_HOST=$(az network public-ip list --resource-group $DP_GROUP --query [].dnsSettings.fqdn -otsv)
+          POSTGRES_HOST=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg.postgres.database.azure.com
+          POSTGRES_USER=osdu_admin@$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-pg
+          REDIS_HOST=$(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-sr --query value -otsv)-cache.redis.cache.windows.net
 
           echo "GROUP=$GROUP" >> $GITHUB_ENV
           echo "ENV_VAULT=$ENV_VAULT" >> $GITHUB_ENV
           echo "REGISTRY=$REGISTRY" >> $GITHUB_ENV
           echo "DP_GROUP=$DP_GROUP" >> $GITHUB_ENV
           echo "DNS_HOST=$DNS_HOST" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=$POSTGRES_HOST" >> $GITHUB_ENV
+          echo "POSTGRES_USER=$POSTGRES_USER" >> $GITHUB_ENV
+          echo "REDIS_HOST=$REDIS_HOST" >> $GITHUB_ENV
 
       - name: Configure Sealed Secrets
         run: |
@@ -114,9 +120,6 @@ jobs:
             prune: true
             validation: client
             healthChecks:
-            - kind: Deployment
-              name: env-debug
-              namespace: dev-sample
             - kind: Deployment
               name: istio-operator
               namespace: istio-operator
@@ -211,8 +214,8 @@ jobs:
             - ../base/osdu-ddms-wellbore
           patchesStrategicMerge:
             - istio-values.yaml
-            - dev-sample-values.yaml
             - airflow-base-values.yaml
+            - airflow-values.yaml
             - self-managed-base-values.yaml
             - default-service-values.yaml
             - token-service-values.yaml
@@ -254,27 +257,6 @@ jobs:
                   appid: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
           EOF
 
-      - name: Create Helm Values - dev-sample
-        run: |
-          cat > $GITHUB_WORKSPACE/apps/$CLUSTER/dev-sample-values.yaml << EOF
-          ---
-          apiVersion: helm.toolkit.fluxcd.io/v2beta1
-          kind: HelmRelease
-          metadata:
-            name: env-tool
-            namespace: dev-sample
-          spec:
-            values:
-              azure:
-                tenant: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/tenant-id --query value -otsv)
-                subscription: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/subscription-id --query value -otsv)
-                resourcegroup: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-cr --query value -otsv)-rg
-                identity: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/base-name-cr --query value -otsv)-osdu-identity
-                identity_id: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/osdu-identity-id --query value -otsv)
-                keyvault: $ENV_VAULT
-                appid: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
-          EOF
-
       - name: Create Helm Values - airflow
         run: |
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/airflow-base-values.yaml << EOF
@@ -296,6 +278,147 @@ jobs:
                 appid: $(az keyvault secret show --id https://${ENV_VAULT}.vault.azure.net/secrets/aad-client-id --query value -otsv)
               image:
                 repository: $REGISTRY
+          EOF
+
+          cat > $GITHUB_WORKSPACE/apps/$CLUSTER/airflow-base-values.yaml << EOF
+          ---
+          apiVersion: helm.toolkit.fluxcd.io/v2beta1
+          kind: HelmRelease
+          metadata:
+            name: airflow
+            namespace: airflow
+          spec:
+            values:
+              ########################################
+              ## CONFIG | Airflow Configs
+              ########################################
+              airflow:
+                dbMigrations:
+                  podLabels:
+                    aadpodidbinding: "airflow-identity"
+                sync:
+                  podLabels:
+                    aadpodidbinding: "airflow-identity"
+                extraVolumeMounts:
+                  - name: azure-keyvault
+                    mountPath: "/mnt/azure-keyvault"
+                    readOnly: true
+                extraConfigmapMounts:
+                  - name: remote-log-config
+                    mountPath: /opt/airflow/config
+                    configMap: airflow-remote-log-config
+                    readOnly: true
+                extraVolumes:
+                  - name: azure-keyvault
+                    csi:
+                      driver: secrets-store.csi.k8s.io
+                      readOnly: true
+                      volumeAttributes:
+                        secretProviderClass: azure-keyvault
+              
+              ###################################
+              ## COMPONENT | Airflow Scheduler
+              ###################################
+              scheduler:
+                replicas: 2
+                podLabels:
+                  aadpodidbinding: "airflow-identity"
+              
+              ###################################
+              ## COMPONENT | Airflow Webserver
+              ###################################
+              web:
+                replicas: 1
+                podLabels:
+                  aadpodidbinding: "airflow-identity"
+              
+              ###################################
+              ## COMPONENT | Airflow Workers
+              ###################################
+              workers:
+                replicas: 3
+                podLabels:
+                  aadpodidbinding: "airflow-identity"
+
+              ###################################
+              ## COMPONENT | Flower
+              ###################################
+              flower:
+                enabled: false
+
+              ###################################
+              ## CONFIG | Airflow Logs
+              ###################################
+              logs:
+                path: /opt/airflow/logs
+                persistence:
+                  enabled: false
+
+              ###################################
+              ## CONFIG | Airflow DAGs
+              ###################################
+              dags:
+                path: /opt/airflow/dags
+                persistence:
+                  enabled: false
+
+              ###################################
+              ## CONFIG | Kubernetes Ingress
+              ###################################
+              ingress:
+                enabled: false
+
+              ###################################
+              ## DATABASE | PgBouncer
+              ###################################
+              pgbouncer:
+                enabled: true
+
+              ###################################
+              ## DATABASE | Embedded Postgres
+              ###################################
+              postgresql:
+                enabled: false
+
+              ###################################
+              ## DATABASE | External Database
+              ###################################    
+              externalDatabase:
+                type: postgres
+                host: $POSTGRES_HOST
+                user: $POSTGRES_USER
+                passwordSecret: "postgres"
+                passwordSecretKey: "postgres-password"
+                port: 5432
+                properties: "?sslmode=require"
+                database: airflow
+
+              ###################################
+              ## DATABASE | Embedded Redis
+              ###################################
+              redis:
+                enabled: false
+
+              ###################################
+              ## DATABASE | External Redis
+              ###################################   
+              externalRedis:
+                host: $REDIS_HOST
+                passwordSecret: "redis"
+                passwordSecretKey: "redis-password"
+                port: 6380
+
+              ###################################
+              ## CONFIG | ServiceMonitor (Prometheus Operator)
+              ###################################
+              serviceMonitor:
+                enabled: false
+
+              ###################################
+              ## CONFIG | PrometheusRule (Prometheus Operator)
+              ###################################
+              prometheusRule:
+                enabled: false
           EOF
 
       - name: Create Helm Values - self-managed-base
