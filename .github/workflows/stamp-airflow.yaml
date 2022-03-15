@@ -82,9 +82,9 @@ jobs:
               - name: azure-keyvault
                 mountPath: "/mnt/azure-keyvault"
                 readOnly: true
-              - name: dags-data
-                mountPath: /opt/airflow/plugins
-                subPath: plugins
+              # - name: dags-data
+              #   mountPath: /opt/airflow/plugins
+              #   subPath: plugins
             extraConfigmapMounts:
               - name: remote-log-config
                 mountPath: /opt/airflow/config
