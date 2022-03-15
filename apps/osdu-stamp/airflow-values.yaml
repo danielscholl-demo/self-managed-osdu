@@ -6,8 +6,29 @@ metadata:
   namespace: airflow
 spec:
   values:
-    ###################################
-    ## COMPONENT | Flower
-    ###################################
+    airflow:
+      extraVolumeMounts:
+        - name: azure-keyvault
+          mountPath: "/mnt/azure-keyvault"
+          readOnly: true
+      extraVolumes:
+        - name: azure-keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-keyvault
+      scheduler:
+        replicas: 2
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      web:
+        replicas: 1
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      workers:
+        replicas: 3
+        podLabels:
+          aadpodidbinding: "airflow-identity"
     flower:
       enabled: false
