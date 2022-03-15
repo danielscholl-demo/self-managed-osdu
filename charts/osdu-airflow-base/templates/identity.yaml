@@ -2,7 +2,7 @@
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentity
 metadata:
-  name: osdu-identity
+  name: airflow-identity
   namespace: {{ $namespace }}
   annotations:
     aadpodidentity.k8s.io/Behavior: namespaced
@@ -14,8 +14,8 @@ spec:
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentityBinding
 metadata:
-  name: osdu-identity-binding
+  name: airflow-identity-binding
   namespace: {{ $namespace }}
 spec:
-  azureIdentity: osdu-identity
-  selector: osdu-identity
+  azureIdentity: airflow-identity
+  selector: airflow-identity

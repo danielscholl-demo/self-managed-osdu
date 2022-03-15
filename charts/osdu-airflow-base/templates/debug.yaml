@@ -6,7 +6,7 @@ metadata:
   name: debug-env
   namespace: {{ $namespace }}
   labels:
-    aadpodidbinding: osdu-identity
+    aadpodidbinding: airflow-identity
 spec:
   volumes:
     - name: azure-keyvault
