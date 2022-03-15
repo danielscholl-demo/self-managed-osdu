@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ../base/osdu-base
   - ../base/osdu-istio
-  # - ../base/osdu-airflow
+  - ../base/osdu-airflow
   - ../base/dev-sample
   - ../base/osdu-azure
   - ../base/osdu-ddms-seismic
@@ -12,8 +12,8 @@ resources:
 patchesStrategicMerge:
   - istio-values.yaml
   - dev-sample-values.yaml
-  # - airflow-base-values.yaml
-  # - airflow-values.yaml
+  - airflow-base-values.yaml
+  - airflow-values.yaml
   - self-managed-base-values.yaml
   - default-service-values.yaml
   - token-service-values.yaml
