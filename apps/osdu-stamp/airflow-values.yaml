@@ -6,8 +6,13 @@ metadata:
   namespace: airflow
 spec:
   values:
+    flower:
+      enabled: false
     airflow:
       dbMigrations:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      sync:
         podLabels:
           aadpodidbinding: "airflow-identity"
       extraVolumeMounts:
@@ -33,5 +38,4 @@ spec:
         replicas: 3
         podLabels:
           aadpodidbinding: "airflow-identity"
-    flower:
-      enabled: false
+
