@@ -2,17 +2,137 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: airflow-base
+  name: airflow
   namespace: airflow
 spec:
   values:
-    azure:
-      tenant: 72f988bf-86f1-41af-91ab-2d7cd011db47
-      subscription: 2e458de2-af10-484c-a5a5-6c259d9a907f
-      resourcegroup: osdu-self-cplbeigf-rvt6-rg
-      identity: osdu-self-cplbeigf-rvt6-osdu-identity
-      identity_id: b0240baa-888e-44d6-b25f-b81f51c7c12e
-      keyvault: osdu-self-cplbei-rvt6-kv
-      appid: f78ba065-2926-4df4-a2a2-c8cd2657c8dd
-    image:
-      repository: osduselfcplbeirvt6cr.azurecr.io
+    ########################################
+    ## CONFIG | Airflow Configs
+    ########################################
+    airflow:
+      dbMigrations:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      sync:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      extraVolumeMounts:
+        - name: azure-keyvault
+          mountPath: "/mnt/azure-keyvault"
+          readOnly: true
+      extraConfigmapMounts:
+        - name: remote-log-config
+          mountPath: /opt/airflow/config
+          configMap: airflow-remote-log-config
+          readOnly: true
+      extraVolumes:
+        - name: azure-keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-keyvault
+    
+    ###################################
+    ## COMPONENT | Airflow Scheduler
+    ###################################
+    scheduler:
+      replicas: 2
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+    
+    ###################################
+    ## COMPONENT | Airflow Webserver
+    ###################################
+    web:
+      replicas: 1
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+    
+    ###################################
+    ## COMPONENT | Airflow Workers
+    ###################################
+    workers:
+      replicas: 3
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+
+    ###################################
+    ## COMPONENT | Flower
+    ###################################
+    flower:
+      enabled: false
+
+    ###################################
+    ## CONFIG | Airflow Logs
+    ###################################
+    logs:
+      path: /opt/airflow/logs
+      persistence:
+        enabled: false
+
+    ###################################
+    ## CONFIG | Airflow DAGs
+    ###################################
+    dags:
+      path: /opt/airflow/dags
+      persistence:
+        enabled: false
+
+    ###################################
+    ## CONFIG | Kubernetes Ingress
+    ###################################
+    ingress:
+      enabled: false
+
+    ###################################
+    ## DATABASE | PgBouncer
+    ###################################
+    pgbouncer:
+      enabled: true
+
+    ###################################
+    ## DATABASE | Embedded Postgres
+    ###################################
+    postgresql:
+      enabled: false
+
+    ###################################
+    ## DATABASE | External Database
+    ###################################    
+    externalDatabase:
+      type: postgres
+      host: osdu-self-dplbeigf-oe4m-pg.postgres.database.azure.com
+      user: osdu_admin@osdu-self-dplbeigf-oe4m-pg
+      passwordSecret: "postgres"
+      passwordSecretKey: "postgres-password"
+      port: 5432
+      properties: "?sslmode=require"
+      database: airflow
+
+    ###################################
+    ## DATABASE | Embedded Redis
+    ###################################
+    redis:
+      enabled: false
+
+    ###################################
+    ## DATABASE | External Redis
+    ###################################   
+    externalRedis:
+      host: osdu-self-dplbeigf-oe4m-cache.redis.cache.windows.net
+      passwordSecret: "redis"
+      passwordSecretKey: "redis-password"
+      port: 6380
+
+    ###################################
+    ## CONFIG | ServiceMonitor (Prometheus Operator)
+    ###################################
+    serviceMonitor:
+      enabled: false
+
+    ###################################
+    ## CONFIG | PrometheusRule (Prometheus Operator)
+    ###################################
+    prometheusRule:
+      enabled: false
