@@ -14,9 +14,6 @@ spec:
   validation: client
   healthChecks:
   - kind: Deployment
-    name: env-debug
-    namespace: dev-sample
-  - kind: Deployment
     name: istio-operator
     namespace: istio-operator
   - kind: Deployment
