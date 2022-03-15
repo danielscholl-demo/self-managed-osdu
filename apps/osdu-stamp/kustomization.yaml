@@ -11,7 +11,7 @@ resources:
   - ../base/osdu-ddms-wellbore
 patchesStrategicMerge:
   - istio-values.yaml
-  - dev-sample-values.yaml
+  # - dev-sample-values.yaml
   # - airflow-base-values.yaml
   # - airflow-values.yaml
   - self-managed-base-values.yaml
