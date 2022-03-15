@@ -11,10 +11,10 @@ spec:
     airflow:
       dbMigrations:
         podLabels:
-          aadpodidbinding: "airflow-identity"
+          aadpodidbinding: "osdu-identity"
       sync:
         podLabels:
-          aadpodidbinding: "airflow-identity"
+          aadpodidbinding: "osdu-identity"
       extraVolumeMounts:
         - name: azure-keyvault
           mountPath: "/mnt/azure-keyvault"
@@ -29,13 +29,13 @@ spec:
       scheduler:
         replicas: 2
         podLabels:
-          aadpodidbinding: "airflow-identity"
+          aadpodidbinding: "osdu-identity"
       web:
         replicas: 1
         podLabels:
-          aadpodidbinding: "airflow-identity"
+          aadpodidbinding: "osdu-identity"
       workers:
         replicas: 3
         podLabels:
-          aadpodidbinding: "airflow-identity"
+          aadpodidbinding: "osdu-identity"
 

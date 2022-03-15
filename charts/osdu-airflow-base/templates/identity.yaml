@@ -2,8 +2,10 @@
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentity
 metadata:
-  name: airflow-identity
+  name: osdu-identity
   namespace: {{ $namespace }}
+  annotations:
+    aadpodidentity.k8s.io/Behavior: namespaced
 spec:
   type: 0
   resourceID: "/subscriptions/{{ .Values.azure.subscription }}/resourcegroups/{{ .Values.azure.resourcegroup }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ .Values.azure.identity }}"
@@ -12,8 +14,8 @@ spec:
 apiVersion: aadpodidentity.k8s.io/v1
 kind: AzureIdentityBinding
 metadata:
-  name: airflow-identity-binding
+  name: osdu-identity-binding
   namespace: {{ $namespace }}
 spec:
-  azureIdentity: airflow-identity
-  selector: airflow-identity
+  azureIdentity: osdu-identity
+  selector: osdu-identity

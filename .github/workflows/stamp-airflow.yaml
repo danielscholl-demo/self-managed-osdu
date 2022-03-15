@@ -233,7 +233,7 @@ jobs:
               cpu: "2500m"
               memory: "1Gi"
             podLabels:
-              aadpodidbinding: "airflow-identity"
+              aadpodidbinding: "osdu-identity"
             podAnnotations:
               sidecar.istio.io/inject: "false"
             podDisruptionBudget:
@@ -245,7 +245,7 @@ jobs:
           web:
             replicas: 1
             podLabels:
-              aadpodidbinding: "airflow-identity"
+              aadpodidbinding: "osdu-identity"
             podDisruptionBudget:
               enabled: false
 
@@ -263,7 +263,7 @@ jobs:
                 cpu: "1200m"
                 memory: "5Gi"
             podLabels:
-              aadpodidbinding: "airflow-identity"
+              aadpodidbinding: "osdu-identity"
             podAnnotations:
               sidecar.istio.io/inject: "false"
             podDisruptionBudget:

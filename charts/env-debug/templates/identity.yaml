@@ -4,6 +4,8 @@ kind: AzureIdentity
 metadata:
   name: osdu-identity
   namespace: {{ $namespace }}
+  annotations:
+    aadpodidentity.k8s.io/Behavior: namespaced
 spec:
   type: 0
   resourceID: "/subscriptions/{{ .Values.azure.subscription }}/resourcegroups/{{ .Values.azure.resourcegroup }}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{{ .Values.azure.identity }}"
