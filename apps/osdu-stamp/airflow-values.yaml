@@ -1,0 +1,13 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  values:
+    ###################################
+    ## COMPONENT | Flower
+    ###################################
+    flower:
+      enabled: false
