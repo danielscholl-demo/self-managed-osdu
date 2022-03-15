@@ -7,6 +7,9 @@ metadata:
 spec:
   values:
     airflow:
+      dbMigrations:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
       extraVolumeMounts:
         - name: azure-keyvault
           mountPath: "/mnt/azure-keyvault"
