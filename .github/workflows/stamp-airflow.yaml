@@ -306,25 +306,25 @@ jobs:
           ## CONFIG | Kubernetes Ingress
           ###################################
           ingress:
-            enabled: true
-            web:
-              annotations:
-                kubernetes.io/ingress.class: azure/application-gateway
-                appgw.ingress.kubernetes.io/request-timeout: "300"
-                appgw.ingress.kubernetes.io/connection-draining: "true"
-                appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-                cert-manager.io/cluster-issuer: letsencrypt-prod-dns
-                cert-manager.io/acme-challenge-type: http01
-              path: "/airflow"
-              host: $DNS_HOST
-              livenessPath: "/airflow/health"
-              tls:
-                enabled: true
-                secretName: osdu-certificate
-              precedingPaths:
-                - path: "/airflow/*"
-                  serviceName: airflow-web
-                  servicePort: 8080
+            enabled: false
+            # web:
+            #   annotations:
+            #     kubernetes.io/ingress.class: azure/application-gateway
+            #     appgw.ingress.kubernetes.io/request-timeout: "300"
+            #     appgw.ingress.kubernetes.io/connection-draining: "true"
+            #     appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+            #     cert-manager.io/cluster-issuer: letsencrypt-prod-dns
+            #     cert-manager.io/acme-challenge-type: http01
+            #   path: "/airflow"
+            #   host: $DNS_HOST
+            #   livenessPath: "/airflow/health"
+            #   tls:
+            #     enabled: true
+            #     secretName: osdu-certificate
+            #   precedingPaths:
+            #     - path: "/airflow/*"
+            #       serviceName: airflow-web
+            #       servicePort: 8080
 
           ###################################
           ## CONFIG | Kubernetes RBAC
@@ -398,8 +398,6 @@ jobs:
           prometheusRule:
             enabled: false
 
-
-
           EOF
 
       - name: Namespace - Wait
@@ -466,85 +464,85 @@ jobs:
         run: |
           helm upgrade --install airflow $GITHUB_WORKSPACE/charts/airflow --values ${{ runner.temp }}/custom-values.yaml --namespace airflow
 
-      - name: User Job - Create
-        run: |
-          cat > ${{ runner.temp }}/create-user.yaml << EOF
-          apiVersion: batch/v1
-          kind: Job
-          metadata:
-            name: "create-user"
-          spec:
-            ttlSecondsAfterFinished: 60
-            template:
-              metadata:
-                name: "create-user"
-                labels:
-                  aadpodidbinding: "osdu-identity"
-              spec:
-                restartPolicy: Never
-                containers:
-                - name: post-install-job
-                  image: python:3.6.12-slim-buster
-                  command: ['sh','-c','pip install --user -r /scripts/requirements.txt && python /scripts/create_default_user.py']
-                  volumeMounts:
-                  - name: config-volume
-                    mountPath: /scripts
-                  - name: azure-keyvault
-                    mountPath: "/mnt/azure-keyvault"
-                    readOnly: true
-                  env:
-                  - name: DATABASE_USER
-                    value: $POSTGRES_USER
-                  - name: DATABASE_HOST
-                    value: $POSTGRES_HOST
-                  - name: DATABASE_DB
-                    value: airflow
-                  - name: DATABASE_USER_PASS
-                    valueFrom:
-                      secretKeyRef:
-                        name: postgres
-                        key: postgres-password
-                  - name: AIRFLOW_ADMIN
-                    value: admin
-                  - name: AIRFLOW_ADMIN_PASS
-                    valueFrom:
-                      secretKeyRef:
-                        name: airflow
-                        key: admin-password
-                volumes:
-                - name: config-volume
-                  configMap:
-                    name: post-install-job-config
-                - name: azure-keyvault
-                  csi:
-                    driver: secrets-store.csi.k8s.io
-                    readOnly: true
-                    volumeAttributes:
-                      secretProviderClass: azure-keyvault
-          EOF
-          kubectl apply -f ${{ runner.temp }}/create-user.yaml --namespace airflow
+      # - name: User Job - Create
+      #   run: |
+      #     cat > ${{ runner.temp }}/create-user.yaml << EOF
+      #     apiVersion: batch/v1
+      #     kind: Job
+      #     metadata:
+      #       name: "create-user"
+      #     spec:
+      #       ttlSecondsAfterFinished: 60
+      #       template:
+      #         metadata:
+      #           name: "create-user"
+      #           labels:
+      #             aadpodidbinding: "osdu-identity"
+      #         spec:
+      #           restartPolicy: Never
+      #           containers:
+      #           - name: post-install-job
+      #             image: python:3.6.12-slim-buster
+      #             command: ['sh','-c','pip install --user -r /scripts/requirements.txt && python /scripts/create_default_user.py']
+      #             volumeMounts:
+      #             - name: config-volume
+      #               mountPath: /scripts
+      #             - name: azure-keyvault
+      #               mountPath: "/mnt/azure-keyvault"
+      #               readOnly: true
+      #             env:
+      #             - name: DATABASE_USER
+      #               value: $POSTGRES_USER
+      #             - name: DATABASE_HOST
+      #               value: $POSTGRES_HOST
+      #             - name: DATABASE_DB
+      #               value: airflow
+      #             - name: DATABASE_USER_PASS
+      #               valueFrom:
+      #                 secretKeyRef:
+      #                   name: postgres
+      #                   key: postgres-password
+      #             - name: AIRFLOW_ADMIN
+      #               value: admin
+      #             - name: AIRFLOW_ADMIN_PASS
+      #               valueFrom:
+      #                 secretKeyRef:
+      #                   name: airflow
+      #                   key: admin-password
+      #           volumes:
+      #           - name: config-volume
+      #             configMap:
+      #               name: post-install-job-config
+      #           - name: azure-keyvault
+      #             csi:
+      #               driver: secrets-store.csi.k8s.io
+      #               readOnly: true
+      #               volumeAttributes:
+      #                 secretProviderClass: azure-keyvault
+      #     EOF
+      #     kubectl apply -f ${{ runner.temp }}/create-user.yaml --namespace airflow
 
-      - name: User Job - Cleanup
-        run: |
-          while true; do
-            if kubectl wait --for=condition=complete --timeout=0 job/create-user --namespace airflow 2>/dev/null; then
-              job_result=0
-              break
-            fi
-            if kubectl wait --for=condition=failed --timeout=0 job/create-user --namespace airflow 2>/dev/null; then
-              job_result=1
-              break
-            fi
-            sleep 3
-          done
-          if [[ $job_result -eq 1 ]]; then
-              echo "Job failed!"
-              exit 1
-          fi
-          echo "Job succeeded"
-          POD=$(kubectl get pods --selector=job-name=create-user --output=jsonpath='{.items[*].metadata.name}' --namespace airflow)
-          if [ ! -z "$POD" ]
-          then
-              kubectl delete pod $POD --namespace airflow
-              echo "Pod Removed"
-          fi
+      # - name: User Job - Cleanup
+      #   run: |
+      #     while true; do
+      #       if kubectl wait --for=condition=complete --timeout=0 job/create-user --namespace airflow 2>/dev/null; then
+      #         job_result=0
+      #         break
+      #       fi
+      #       if kubectl wait --for=condition=failed --timeout=0 job/create-user --namespace airflow 2>/dev/null; then
+      #         job_result=1
+      #         break
+      #       fi
+      #       sleep 3
+      #     done
+      #     if [[ $job_result -eq 1 ]]; then
+      #         echo "Job failed!"
+      #         exit 1
+      #     fi
+      #     echo "Job succeeded"
+      #     POD=$(kubectl get pods --selector=job-name=create-user --output=jsonpath='{.items[*].metadata.name}' --namespace airflow)
+      #     if [ ! -z "$POD" ]
+      #     then
+      #         kubectl delete pod $POD --namespace airflow
+      #         echo "Pod Removed"
+      #     fi
