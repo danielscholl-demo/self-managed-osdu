@@ -280,7 +280,7 @@ jobs:
                 repository: $REGISTRY
           EOF
 
-          cat > $GITHUB_WORKSPACE/apps/$CLUSTER/airflow-base-values.yaml << EOF
+          cat > $GITHUB_WORKSPACE/apps/$CLUSTER/airflow-values.yaml << EOF
           ---
           apiVersion: helm.toolkit.fluxcd.io/v2beta1
           kind: HelmRelease
