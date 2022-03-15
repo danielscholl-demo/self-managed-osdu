@@ -89,7 +89,7 @@ spec:
     ## DATABASE | PgBouncer
     ###################################
     pgbouncer:
-      enabled: true
+      enabled: false
 
     ###################################
     ## DATABASE | Embedded Postgres
