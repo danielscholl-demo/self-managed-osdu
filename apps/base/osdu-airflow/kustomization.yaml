@@ -4,4 +4,4 @@ namespace: airflow
 resources:
   - namespace.yaml
   - airflow-base.yaml
-  # - airflowv1.yaml
+  - airflow.yaml
