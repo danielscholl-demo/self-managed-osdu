@@ -360,7 +360,9 @@ jobs:
               dags:
                 path: /opt/airflow/dags
                 persistence:
-                  enabled: false
+                  enabled: true
+                  existingClaim: airflowdag-pvc
+                  subPath: "dags"
 
               ###################################
               ## CONFIG | Kubernetes Ingress
@@ -372,7 +374,7 @@ jobs:
               ## DATABASE | PgBouncer
               ###################################
               pgbouncer:
-                enabled: true
+                enabled: false
 
               ###################################
               ## DATABASE | Embedded Postgres
