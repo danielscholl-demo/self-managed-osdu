@@ -63,7 +63,7 @@ jobs:
           echo "POSTGRES_USER=$POSTGRES_USER" >> $GITHUB_ENV
           echo "REDIS_HOST=$REDIS_HOST" >> $GITHUB_ENV
 
-      - name: Helm Values
+      - name: Airflow Chart - Helm Values
         run: |
           cat > ${{ runner.temp }}/custom-values.yaml << EOF
           ########################################
@@ -400,7 +400,7 @@ jobs:
 
           EOF
 
-      - name: Namespace - Wait
+      - name: Airflow Namespace - Wait
         run: |
           echo "Checking Namespace Exists"
           echo "----------------------------------------"
@@ -460,7 +460,7 @@ jobs:
             sleep 30
           done
 
-      - name: Helm Install
+      - name: Airflow Chart - Helm Install
         run: |
           helm upgrade --install airflow $GITHUB_WORKSPACE/charts/airflow --values ${{ runner.temp }}/custom-values.yaml --namespace airflow
 

@@ -15,5 +15,5 @@ metadata:
   name: airflow-identity-binding
   namespace: {{ $namespace }}
 spec:
-  azureIdentity: osdu-identity
+  azureIdentity: airflow-identity
   selector: airflow-identity
