@@ -24,7 +24,7 @@ spec:
       labels:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/name: appinsights-statsd
-        aadpodidbinding: "osdu-identity"
+        aadpodidbinding: "airflow-identity"
     spec:
       volumes:
         - name: config-volume

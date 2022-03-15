@@ -66,74 +66,18 @@ jobs:
       - name: Helm Values
         run: |
           cat > ${{ runner.temp }}/custom-values.yaml << EOF
-          airflowLogin:
-            name: admin
-          ingress:
-            enabled: true
-            web:
-              annotations:
-                kubernetes.io/ingress.class: azure/application-gateway
-                appgw.ingress.kubernetes.io/request-timeout: "300"
-                appgw.ingress.kubernetes.io/connection-draining: "true"
-                appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
-                cert-manager.io/cluster-issuer: letsencrypt-prod-dns
-                cert-manager.io/acme-challenge-type: http01
-              path: "/airflow"
-              host: $DNS_HOST
-              livenessPath: "/airflow/health"
-              tls:
-                enabled: true
-                secretName: osdu-certificate
-              precedingPaths:
-                - path: "/airflow/*"
-                  serviceName: airflow-web
-                  servicePort: 8080
-          postgresql:
-            enabled: false
-          externalDatabase:
-            type: postgres
-            host: $POSTGRES_HOST
-            user: $POSTGRES_USER
-            passwordSecret: "postgres"
-            passwordSecretKey: "postgres-password"
-            port: 5432
-            properties: "?sslmode=require"
-            database: airflow
-          redis:
-            enabled: false
-          externalRedis:
-            host: $REDIS_HOST
-            passwordSecret: "redis"
-            passwordSecretKey: "redis-password"
-            port: 6380
-          dags:
-            installRequirements: true
-            persistence:
-              enabled: true
-              existingClaim: airflowdag-pvc
-              subPath: "dags"
-          web:
-            podLabels:
-              aadpodidbinding: "osdu-identity"
-            baseUrl: "http://localhost/airflow"
-          workers:
-            podLabels:
-              aadpodidbinding: "osdu-identity"
-            replicas: 2
-          flower:
-            enabled: false
-          scheduler:
-            podLabels:
-              aadpodidbinding: "osdu-identity"
-            variables: |
-              {}
+          ########################################
+          ## CONFIG | Airflow Configs
+          ########################################
           airflow:
             legacyCommands: false
             image:
               repository: apache/airflow
-              tag: 1.10.12-python3.6
+              tag: 2.1.4-python3.8
               pullPolicy: IfNotPresent
               pullSecret: ""
+              uid: 50000
+              gid: 0
             extraVolumeMounts:
               - name: azure-keyvault
                 mountPath: "/mnt/azure-keyvault"
@@ -197,7 +141,6 @@ jobs:
               AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
               AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if dag_run.conf is not none and 'correlation_id' in dag_run.conf %}{{ dag_run.conf['correlation_id'] }}{% else %}None{% endif %}/{{ try_number }}.log"
             extraEnv:
-
             - name: AIRFLOW_VAR_AZURE_DNS_HOST
               value: "$DNS_HOST"
             - name: CLOUD_PROVIDER
@@ -274,6 +217,187 @@ jobs:
               value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"
             - name: AIRFLOW_VAR_ENV_VARS_ENABLED
               value: "true"
+
+          ###################################
+          ## COMPONENT | Airflow Scheduler
+          ###################################
+          scheduler:
+            replicas: 2
+            resources:
+            requests:
+              cpu: "2500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2500m"
+              memory: "1Gi"
+            podLabels:
+              aadpodidbinding: "airflow-identity"
+            podAnnotations:
+              sidecar.istio.io/inject: "false"
+            podDisruptionBudget:
+              enabled: false
+
+          ###################################
+          ## COMPONENT | Airflow Webserver
+          ###################################
+          web:
+            replicas: 1
+            podLabels:
+              aadpodidbinding: "airflow-identity"
+            podDisruptionBudget:
+              enabled: false
+
+          ###################################
+          ## COMPONENT | Airflow Workers
+          ###################################
+          workers:
+            enabled: true
+            replicas: 3
+            resources:
+              requests:
+                cpu: "1200m"
+                memory: "5Gi"
+              limits:
+                cpu: "1200m"
+                memory: "5Gi"
+            podLabels:
+              aadpodidbinding: "airflow-identity"
+            podAnnotations:
+              sidecar.istio.io/inject: "false"
+            podDisruptionBudget:
+              enabled: false
+            autoscaling:
+              enabled: false
+
+          ###################################
+          ## COMPONENT | Flower
+          ###################################
+          flower:
+            enabled: false
+
+          ###################################
+          ## CONFIG | Airflow Logs
+          ###################################
+          logs:
+            path: /opt/airflow/logs
+            persistence:
+              enabled: false
+              existingClaim: ""
+              subPath: ""
+              storageClass: ""
+              accessMode: ReadWriteMany
+              size: 1Gi
+
+          ###################################
+          ## CONFIG | Airflow DAGs
+          ###################################
+          dags:
+            path: /opt/airflow/dags
+            persistence:
+              enabled: false
+              # existingClaim: airflowdag-pvc
+              # subPath: "dags"
+            gitSync:
+              enabled: false
+
+          ###################################
+          ## CONFIG | Kubernetes Ingress
+          ###################################
+          ingress:
+            enabled: true
+            web:
+              annotations:
+                kubernetes.io/ingress.class: azure/application-gateway
+                appgw.ingress.kubernetes.io/request-timeout: "300"
+                appgw.ingress.kubernetes.io/connection-draining: "true"
+                appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+                cert-manager.io/cluster-issuer: letsencrypt-prod-dns
+                cert-manager.io/acme-challenge-type: http01
+              path: "/airflow"
+              host: $DNS_HOST
+              livenessPath: "/airflow/health"
+              tls:
+                enabled: true
+                secretName: osdu-certificate
+              precedingPaths:
+                - path: "/airflow/*"
+                  serviceName: airflow-web
+                  servicePort: 8080
+
+          ###################################
+          ## CONFIG | Kubernetes RBAC
+          ###################################
+          rbac:
+            create: true
+            events: true
+
+          ###################################
+          ## CONFIG | Kubernetes ServiceAccount
+          ###################################
+          serviceAccount:
+            create: true
+            name: ""
+            annotations: {}
+
+          ###################################
+          ## CONFIG | Kubernetes Extra Manifests
+          ###################################
+          extraManifests: []
+
+          ###################################
+          ## DATABASE | PgBouncer
+          ###################################
+          pgbouncer:
+            enabled: false
+
+          ###################################
+          ## DATABASE | Embedded Postgres
+          ###################################
+          postgresql:
+            enabled: false
+
+          ###################################
+          ## DATABASE | External Database
+          ###################################
+          externalDatabase:
+            type: postgres
+            host: $POSTGRES_HOST
+            user: $POSTGRES_USER
+            passwordSecret: "postgres"
+            passwordSecretKey: "postgres-password"
+            port: 5432
+            properties: "?sslmode=require"
+            database: airflow
+
+          ###################################
+          ## DATABASE | Embedded Redis
+          ###################################
+          redis:
+            enabled: false
+
+          ###################################
+          ## DATABASE | External Redis
+          ###################################
+          externalRedis:
+            host: $REDIS_HOST
+            passwordSecret: "redis"
+            passwordSecretKey: "redis-password"
+            port: 6380
+
+          ###################################
+          ## CONFIG | ServiceMonitor (Prometheus Operator)
+          ###################################
+          serviceMonitor:
+            enabled: false
+
+          ###################################
+          ## CONFIG | PrometheusRule (Prometheus Operator)
+          ###################################
+          prometheusRule:
+            enabled: false
+
+
+
           EOF
 
       - name: Namespace - Wait
