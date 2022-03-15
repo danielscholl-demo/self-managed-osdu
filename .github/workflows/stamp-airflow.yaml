@@ -217,6 +217,8 @@ jobs:
               value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"
             - name: AIRFLOW_VAR_ENV_VARS_ENABLED
               value: "true"
+            - name: AIRFLOW__WEBSERVER__BASE_URL
+              value: "https://$DNS_HOST/airflow"
 
           ###################################
           ## COMPONENT | Airflow Scheduler
