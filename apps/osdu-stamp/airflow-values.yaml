@@ -6,18 +6,24 @@ metadata:
   namespace: airflow
 spec:
   values:
-    flower:
-      enabled: false
+    ########################################
+    ## CONFIG | Airflow Configs
+    ########################################
     airflow:
       dbMigrations:
         podLabels:
-          aadpodidbinding: "osdu-identity"
+          aadpodidbinding: "airflow-identity"
       sync:
         podLabels:
-          aadpodidbinding: "osdu-identity"
+          aadpodidbinding: "airflow-identity"
       extraVolumeMounts:
         - name: azure-keyvault
           mountPath: "/mnt/azure-keyvault"
+          readOnly: true
+      extraConfigmapMounts:
+        - name: remote-log-config
+          mountPath: /opt/airflow/config
+          configMap: airflow-remote-log-config
           readOnly: true
       extraVolumes:
         - name: azure-keyvault
@@ -26,16 +32,95 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: azure-keyvault
-      scheduler:
-        replicas: 2
-        podLabels:
-          aadpodidbinding: "osdu-identity"
-      web:
-        replicas: 1
-        podLabels:
-          aadpodidbinding: "osdu-identity"
-      workers:
-        replicas: 3
-        podLabels:
-          aadpodidbinding: "osdu-identity"
+    
+    ###################################
+    ## COMPONENT | Airflow Scheduler
+    ###################################
+    scheduler:
+      replicas: 2
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+    
+    ###################################
+    ## COMPONENT | Airflow Webserver
+    ###################################
+    web:
+      replicas: 1
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+    
+    ###################################
+    ## COMPONENT | Airflow Workers
+    ###################################
+    workers:
+      replicas: 3
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+
+    ###################################
+    ## COMPONENT | Flower
+    ###################################
+    flower:
+      enabled: false
+
+    ###################################
+    ## CONFIG | Airflow Logs
+    ###################################
+    logs:
+      path: /opt/airflow/logs
+      persistence:
+        enabled: false
+
+    ###################################
+    ## CONFIG | Airflow DAGs
+    ###################################
+    dags:
+      path: /opt/airflow/dags
+      persistence:
+        enabled: false
+
+    ###################################
+    ## CONFIG | Kubernetes Ingress
+    ###################################
+    ingress:
+      enabled: false
+
+    ###################################
+    ## DATABASE | PgBouncer
+    ###################################
+    pgbouncer:
+      enabled: true
+
+    ###################################
+    ## DATABASE | Embedded Postgres
+    ###################################
+    postgresql:
+      enabled: true
+
+    ###################################
+    ## DATABASE | External Database
+    ###################################    
+
+
+    ###################################
+    ## DATABASE | Embedded Redis
+    ###################################
+    redis:
+      enabled: true
+
+    ###################################
+    ## DATABASE | External Redis
+    ###################################   
+
+    ###################################
+    ## CONFIG | ServiceMonitor (Prometheus Operator)
+    ###################################
+    serviceMonitor:
+      enabled: false
+
+    ###################################
+    ## CONFIG | PrometheusRule (Prometheus Operator)
+    ###################################
+    prometheusRule:
+      enabled: false
 
