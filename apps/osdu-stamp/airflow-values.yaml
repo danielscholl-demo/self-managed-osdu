@@ -95,22 +95,35 @@ spec:
     ## DATABASE | Embedded Postgres
     ###################################
     postgresql:
-      enabled: true
+      enabled: false
 
     ###################################
     ## DATABASE | External Database
     ###################################    
-
+    externalDatabase:
+      type: postgres
+      host: osdu-self-dplbeigf-oe4m-pg.postgres.database.azure.com
+      user: osdu_admin@osdu-self-dplbeigf-oe4m-pg
+      passwordSecret: "postgres"
+      passwordSecretKey: "postgres-password"
+      port: 5432
+      properties: "?sslmode=require"
+      database: airflow
 
     ###################################
     ## DATABASE | Embedded Redis
     ###################################
     redis:
-      enabled: true
+      enabled: false
 
     ###################################
     ## DATABASE | External Redis
     ###################################   
+    externalRedis:
+      host: osdu-self-dplbeigf-oe4m-cache.redis.cache.windows.net
+      passwordSecret: "redis"
+      passwordSecretKey: "redis-password"
+      port: 6380
 
     ###################################
     ## CONFIG | ServiceMonitor (Prometheus Operator)
@@ -123,4 +136,3 @@ spec:
     ###################################
     prometheusRule:
       enabled: false
-
