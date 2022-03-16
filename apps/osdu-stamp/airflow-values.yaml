@@ -51,6 +51,7 @@ spec:
         # AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
         # AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
         # AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
+        AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dplfhag-73n2-gw.westeurope.cloudapp.azure.com/airflow"
         AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
         AIRFLOW__CORE__REMOTE_LOGGING: "True"
         AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
@@ -105,7 +106,7 @@ spec:
         - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
           value: ""
         - name: AIRFLOW_VAR_DAG_IMAGE_ACR
-          value:        
+          value:
         - name: PYTHONPATH
           value: "/opt/celery"
           # Needed for installing python osdu python sdk.
@@ -136,10 +137,9 @@ spec:
         - name: AIRFLOW_VAR_CORE__SERVICE__LEGAL__HOST
           value: "http://legal.osdu-azure.svc.cluster.local/api/legal/v1"
         - name: AIRFLOW_VAR_CORE__SERVICE__ENTITLEMENTS__URL
-          value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"      
+          value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"
         - name: AIRFLOW_VAR_ENV_VARS_ENABLED
           value: "true"
-
 
     ###################################
     ## COMPONENT | Airflow Scheduler
@@ -148,7 +148,7 @@ spec:
       replicas: 2
       podLabels:
         aadpodidbinding: "airflow-identity"
-    
+
     ###################################
     ## COMPONENT | Airflow Webserver
     ###################################
@@ -156,7 +156,7 @@ spec:
       replicas: 1
       podLabels:
         aadpodidbinding: "airflow-identity"
-    
+
     ###################################
     ## COMPONENT | Airflow Workers
     ###################################
@@ -227,7 +227,7 @@ spec:
 
     ###################################
     ## DATABASE | External Database
-    ###################################    
+    ###################################
     externalDatabase:
       type: postgres
       host: osdu-self-dplfhag-73n2-pg.postgres.database.azure.com
@@ -246,7 +246,7 @@ spec:
 
     ###################################
     ## DATABASE | External Redis
-    ###################################   
+    ###################################
     externalRedis:
       host: osdu-self-dplfhag-73n2-cache.redis.cache.windows.net
       passwordSecret: "redis"

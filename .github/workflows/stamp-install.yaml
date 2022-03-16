@@ -329,6 +329,7 @@ jobs:
                   AIRFLOW__SCHEDULER__STATSD_PORT: 8125
                   AIRFLOW__SCHEDULER__STATSD_PREFIX: "osdu_airflow"
                   AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: 60
+                  AIRFLOW__WEBSERVER__BASE_URL: "https://$DNS_HOST/airflow"
                   # AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "True"
                   # AIRFLOW__WEBSERVER__RBAC: "True"
                   # AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
@@ -388,7 +389,7 @@ jobs:
                   - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
                     value: "$AZURE_ENABLE_MSI"
                   - name: AIRFLOW_VAR_DAG_IMAGE_ACR
-                    value: $AZURE_ACR       
+                    value: $AZURE_ACR
                   - name: PYTHONPATH
                     value: "/opt/celery"
                     # Needed for installing python osdu python sdk.
@@ -419,12 +420,12 @@ jobs:
                   - name: AIRFLOW_VAR_CORE__SERVICE__LEGAL__HOST
                     value: "http://legal.osdu-azure.svc.cluster.local/api/legal/v1"
                   - name: AIRFLOW_VAR_CORE__SERVICE__ENTITLEMENTS__URL
-                    value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"      
+                    value: "http://entitlements.osdu-azure.svc.cluster.local/api/entitlements/v2"
                   - name: AIRFLOW_VAR_ENV_VARS_ENABLED
                     value: "true"
 
 
-              
+
               ###################################
               ## COMPONENT | Airflow Scheduler
               ###################################
@@ -432,7 +433,7 @@ jobs:
                 replicas: 2
                 podLabels:
                   aadpodidbinding: "airflow-identity"
-              
+
               ###################################
               ## COMPONENT | Airflow Webserver
               ###################################
@@ -440,7 +441,7 @@ jobs:
                 replicas: 1
                 podLabels:
                   aadpodidbinding: "airflow-identity"
-              
+
               ###################################
               ## COMPONENT | Airflow Workers
               ###################################
@@ -511,7 +512,7 @@ jobs:
 
               ###################################
               ## DATABASE | External Database
-              ###################################    
+              ###################################
               externalDatabase:
                 type: postgres
                 host: $POSTGRES_HOST
@@ -530,7 +531,7 @@ jobs:
 
               ###################################
               ## DATABASE | External Redis
-              ###################################   
+              ###################################
               externalRedis:
                 host: $REDIS_HOST
                 passwordSecret: "redis"
