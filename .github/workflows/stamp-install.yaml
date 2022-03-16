@@ -309,9 +309,9 @@ jobs:
                     configMap: airflow-remote-log-config
                     readOnly: true
                   - name: celery-config
-                      mountPath: /opt/celery
-                      configMap: celery-config
-                      readOnly: true
+                    mountPath: /opt/celery
+                    configMap: celery-config
+                    readOnly: true
                 extraVolumes:
                   - name: azure-keyvault
                     csi:
