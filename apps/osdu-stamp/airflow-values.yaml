@@ -41,6 +41,13 @@ spec:
           "flask-bcrypt==0.7.1",
           "apache-airflow[statsd,kubernetes,password]==2.2.4",
           "apache-airflow-providers-microsoft-azure==3.6.0",
+          "google-cloud-storage",
+          "python-keycloak==0.24.0",
+          "msal==1.9.0",
+          "azure-identity==1.5.0",
+          "azure-keyvault-secrets==4.2.0",
+          "azure-storage-blob",
+          "azure-servicebus==7.0.1",
         ]
       config:
         # AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
