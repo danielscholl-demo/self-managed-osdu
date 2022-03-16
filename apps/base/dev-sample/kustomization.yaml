@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: dev-sample
 resources:
   - namespace.yaml
-  # - release.yaml
   - token.yaml
