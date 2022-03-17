@@ -34,24 +34,28 @@ spec:
           mountPath: /opt/airflow/config
           configMap: airflow-remote-log-config
           readOnly: true
-      extraPipPackages: ["flask-bcrypt==0.7.1"]
-      # "toposort==1.6",
-      # "strict-rfc3339==0.7",
-      # "jsonschema==3.2.0",
-      # "pyyaml==5.4.1",
-      # "requests==2.25.1",
-      # "tenacity==8.0.1",
-      # "dataclasses==0.8",
-      # "apache-airflow[statsd]",
-      # "apache-airflow[kubernetes]",
-      # "apache-airflow-backport-providers-microsoft-azure==2021.2.5",
-      # "msal==1.9.0",
-      # "azure-identity==1.5.0",
-      # "azure-keyvault-secrets==4.2.0",
-      # "azure-storage-blob",
-      # "azure-servicebus==7.0.1",
-      # "google-cloud-storage",
-      # "python-keycloak==0.24.0",
+      extraPipPackages:
+        [
+          "flask-bcrypt==0.7.1",
+          "toposort==1.6",
+          "strict-rfc3339==0.7",
+          "jsonschema==3.2.0",
+          "pyyaml==5.4.1",
+          "requests==2.25.1",
+          "tenacity==8.0.1",
+          "dataclasses==0.8",
+          "apache-airflow[statsd]",
+          "apache-airflow[kubernetes]",
+          "apache-airflow-backport-providers-microsoft-azure==2021.2.5",
+          "msal==1.9.0",
+          "azure-identity==1.5.0",
+          "azure-keyvault-secrets==4.2.0",
+          "azure-storage-blob",
+          "azure-servicebus==7.0.1",
+          "google-cloud-storage",
+          "python-keycloak==0.24.0",
+        ]
+
       extraEnv:
         - name: AIRFLOW_VAR_AZURE_DNS_HOST
           value: "$DNS_HOST"
