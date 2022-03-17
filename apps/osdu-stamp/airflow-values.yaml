@@ -120,20 +120,20 @@ spec:
     ## DATABASE | Embedded Postgres
     ###################################
     postgresql:
-      enabled: false
+      enabled: true
 
     ###################################
     ## DATABASE | External Database
     ###################################
-    externalDatabase:
-      type: postgres
-      host: osdu-self-dplfhag-73n2-pg.postgres.database.azure.com
-      user: osdu_admin@osdu-self-dplfhag-73n2-pg
-      passwordSecret: "postgres"
-      passwordSecretKey: "postgres-password"
-      port: 5432
-      properties: "?sslmode=require"
-      database: airflow
+    # externalDatabase:
+    #   type: postgres
+    #   host: osdu-self-dplfhag-73n2-pg.postgres.database.azure.com
+    #   user: osdu_admin@osdu-self-dplfhag-73n2-pg
+    #   passwordSecret: "postgres"
+    #   passwordSecretKey: "postgres-password"
+    #   port: 5432
+    #   properties: "?sslmode=require"
+    #   database: airflow
 
     ###################################
     ## DATABASE | Embedded Redis
