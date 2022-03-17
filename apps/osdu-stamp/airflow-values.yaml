@@ -34,6 +34,10 @@ spec:
           mountPath: /opt/airflow/config
           configMap: airflow-remote-log-config
           readOnly: true
+      extraPipPackages: ["flask-bcrypt==0.7.1"]
+      extraEnv:
+        - name: AIRFLOW_VAR_AZURE_DNS_HOST
+          value: "$DNS_HOST"
       config:
         AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
         AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dplfhag-73n2-gw.westeurope.cloudapp.azure.com/airflow"
