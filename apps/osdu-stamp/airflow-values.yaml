@@ -1,0 +1,172 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: airflow
+spec:
+  values:
+    ########################################
+    ## CONFIG | Airflow Configs
+    ########################################
+    airflow:
+      dbMigrations:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      sync:
+        podLabels:
+          aadpodidbinding: "airflow-identity"
+      extraVolumeMounts:
+        - name: azure-keyvault
+          mountPath: "/mnt/azure-keyvault"
+          readOnly: true
+      extraConfigmapMounts:
+        - name: remote-log-config
+          mountPath: /opt/airflow/config
+          configMap: airflow-remote-log-config
+          readOnly: true
+        - name: celery-config
+          mountPath: /opt/celery
+          configMap: celery-config
+          readOnly: true
+      extraVolumes:
+        - name: azure-keyvault
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-keyvault
+      extraPipPackages:
+        [
+          "flask-bcrypt==0.7.1",
+        ]
+      config:
+        AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
+        AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dpldagha-60n0-gw.westeurope.cloudapp.azure.com/airflow"
+      extraEnv:
+        - name: CLOUD_PROVIDER
+          value: "azure"
+
+    ###################################
+    ## COMPONENT | Airflow Scheduler
+    ###################################
+    scheduler:
+      replicas: 2
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+
+    ###################################
+    ## COMPONENT | Airflow Webserver
+    ###################################
+    web:
+      replicas: 1
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+
+    ###################################
+    ## COMPONENT | Airflow Workers
+    ###################################
+    workers:
+      replicas: 3
+      podLabels:
+        aadpodidbinding: "airflow-identity"
+
+    ###################################
+    ## COMPONENT | Flower
+    ###################################
+    flower:
+      enabled: false
+
+    ###################################
+    ## CONFIG | Airflow Logs
+    ###################################
+    logs:
+      path: /opt/airflow/logs
+      persistence:
+        enabled: false
+
+    ###################################
+    ## CONFIG | Airflow DAGs
+    ###################################
+    dags:
+      path: /opt/airflow/dags
+      persistence:
+        enabled: true
+        existingClaim: airflowdag-pvc
+        subPath: "dags"
+
+    ###################################
+    ## CONFIG | Kubernetes Ingress
+    ###################################
+    ingress:
+      enabled: true
+      web:
+        annotations:
+          kubernetes.io/ingress.class: azure/application-gateway
+          appgw.ingress.kubernetes.io/request-timeout: "300"
+          appgw.ingress.kubernetes.io/connection-draining: "true"
+          appgw.ingress.kubernetes.io/connection-draining-timeout: "30"
+          cert-manager.io/cluster-issuer: letsencrypt-prod-dns
+          cert-manager.io/acme-challenge-type: http01
+        path: "/airflow"
+        host: osdu-self-dpldagha-60n0-gw.westeurope.cloudapp.azure.com
+        livenessPath: "/airflow/health"
+        tls:
+          enabled: true
+          secretName: osdu-certificate
+        precedingPaths:
+          - path: "/airflow/*"
+            serviceName: airflow-web
+            servicePort: 8080
+
+    ###################################
+    ## DATABASE | PgBouncer
+    ###################################
+    pgbouncer:
+      enabled: false
+
+    ###################################
+    ## DATABASE | Embedded Postgres
+    ###################################
+    postgresql:
+      enabled: false
+
+    ###################################
+    ## DATABASE | External Database
+    ###################################
+    externalDatabase:
+      type: postgres
+      host: osdu-self-dpldagha-60n0-pg.postgres.database.azure.com
+      user: osdu_admin@osdu-self-dpldagha-60n0-pg
+      passwordSecret: "postgres"
+      passwordSecretKey: "postgres-password"
+      port: 5432
+      properties: "?sslmode=require"
+      database: airflow
+
+    ###################################
+    ## DATABASE | Embedded Redis
+    ###################################
+    redis:
+      enabled: false
+
+    ###################################
+    ## DATABASE | External Redis
+    ###################################
+    externalRedis:
+      host: osdu-self-dpldagha-60n0-cache.redis.cache.windows.net
+      passwordSecret: "redis"
+      passwordSecretKey: "redis-password"
+      port: 6380
+
+    ###################################
+    ## CONFIG | ServiceMonitor (Prometheus Operator)
+    ###################################
+    serviceMonitor:
+      enabled: false
+
+    ###################################
+    ## CONFIG | PrometheusRule (Prometheus Operator)
+    ###################################
+    prometheusRule:
+      enabled: false
