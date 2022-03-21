@@ -144,6 +144,6 @@
   {
     "name": "schema-load",
     "tag": "0.13.1",
-    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-v0-13-1:6c20d492df313c7e013bd6b1d7375c9550b42a05"
+    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-master:a5b19c1c7505319d6d21f8d97ed0e6148bad900c"
   }
 ]
