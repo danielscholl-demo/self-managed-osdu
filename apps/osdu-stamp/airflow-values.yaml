@@ -36,13 +36,11 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: azure-keyvault
-      extraPipPackages:
-        [
-          "flask-bcrypt==0.7.1",
-        ]
+      extraPipPackages: ["flask-bcrypt==0.7.1"]
       config:
         AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
         AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dpldagha-60n0-gw.westeurope.cloudapp.azure.com/airflow"
+        AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
       extraEnv:
         - name: CLOUD_PROVIDER
           value: "azure"

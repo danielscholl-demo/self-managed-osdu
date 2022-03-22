@@ -326,6 +326,7 @@ jobs:
                 config:
                   AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
                   AIRFLOW__WEBSERVER__BASE_URL: "https://$DNS_HOST/airflow"
+                  AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
                 extraEnv:
                   - name: CLOUD_PROVIDER
                     value: "azure"
