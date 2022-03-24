@@ -325,11 +325,66 @@ jobs:
                   ]
                 config:
                   AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
+                  AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
+                  AIRFLOW__CORE__PLUGINS_FOLDER: "/opt/airflow/plugins"
+                  AIRFLOW__CORE__REMOTE_LOGGING: "True"
+                  AIRFLOW__CORE__REMOTE_LOG_CONN_ID: "az_log"
+                  AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
+                  AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
+                  AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if dag_run.conf is not none and 'correlation_id' in dag_run.conf %}{{ dag_run.conf['correlation_id'] }}{% else %}None{% endif %}/{{ try_number }}.log"
                   AIRFLOW__WEBSERVER__BASE_URL: "https://$DNS_HOST/airflow"
                   AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
                 extraEnv:
+                  - name: AIRFLOW_VAR_KEYVAULT_URI
+                    valueFrom:
+                      configMapKeyRef:
+                        name: osdu-svc-config
+                        key: ENV_KEYVAULT
+                  - name: AIRFLOW__CORE__FERNET_KEY
+                    valueFrom:
+                      secretKeyRef:
+                        name: airflow
+                        key: fernet-key
+                  - name: AIRFLOW_CONN_AZ_LOG
+                    valueFrom:
+                      secretKeyRef:
+                        name: airflow
+                        key: remote-log-connection
+                  - name: AIRFLOW_VAR_AZURE_TENANT_ID
+                    valueFrom:
+                      secretKeyRef:
+                        name: active-directory
+                        key: tenantid
+                  - name: AIRFLOW_VAR_AZURE_CLIENT_ID
+                    valueFrom:
+                      secretKeyRef:
+                        name: active-directory
+                        key: principal-clientid
+                  - name: AIRFLOW_VAR_AZURE_CLIENT_SECRET
+                    valueFrom:
+                      secretKeyRef:
+                        name: active-directory
+                        key: principal-clientpassword
+                  - name: AIRFLOW_VAR_AAD_CLIENT_ID
+                    valueFrom:
+                      secretKeyRef:
+                        name: active-directory
+                        key: application-appid
+                  - name: AIRFLOW_VAR_APPINSIGHTS_KEY
+                    valueFrom:
+                      secretKeyRef:
+                        name: central-logging
+                        key: appinsights
                   - name: CLOUD_PROVIDER
                     value: "azure"
+                  - name: AIRFLOW_VAR_AZURE_DNS_HOST
+                    value: "$DNS_HOST"
+                  - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
+                    value: "false"
+                  - name: CI_COMMIT_TAG
+                    value: "v0.13.0"
+                  - name: BUILD_TAG
+                    value: "v0.13.0"
 
               ###################################
               ## COMPONENT | Airflow Scheduler
