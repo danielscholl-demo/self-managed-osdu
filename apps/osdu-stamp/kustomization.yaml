@@ -12,7 +12,7 @@ resources:
 patchesStrategicMerge:
   - istio-values.yaml
   - airflow-base-values.yaml
-  - airflow-values.yaml
+  # - airflow-values.yaml
   - self-managed-base-values.yaml
   - default-service-values.yaml
   - token-service-values.yaml
