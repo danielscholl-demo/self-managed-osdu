@@ -54,7 +54,7 @@ spec:
         AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
         AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
         AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-        AIRFLOW__CELERY__SSL_ACTIVE: "True"
+        # AIRFLOW__CELERY__SSL_ACTIVE: "True"
       extraEnv:
         - name: AIRFLOW_VAR_KEYVAULT_URI
           valueFrom:
