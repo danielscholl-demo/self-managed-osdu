@@ -48,10 +48,10 @@ spec:
         #AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if dag_run.conf is not none and 'correlation_id' in dag_run.conf %}{{ dag_run.conf['correlation_id'] }}{% else %}None{% endif %}/{{ try_number }}.log"
         AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com/airflow"
         AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
-        # AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
-        # AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-        # AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-        # AIRFLOW__CELERY__SSL_ACTIVE: "True"
+        AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
+        AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+        AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+        AIRFLOW__CELERY__SSL_ACTIVE: "True"
       extraEnv:
         - name: AIRFLOW_VAR_KEYVAULT_URI
           valueFrom:
