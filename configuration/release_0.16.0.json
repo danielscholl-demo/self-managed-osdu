@@ -1,0 +1,145 @@
+[
+  {
+    "name": "statsd",
+    "tag": "1.0.0",
+    "image": "msosdu.azurecr.io/statsd:1.0.0"
+  },
+  {
+    "name": "airflow-function",
+    "tag": "1.0.0",
+    "image": "msosdu.azurecr.io/airflow-function:1.0.0"
+  },
+  {
+    "name": "partition",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/partition/partition-v0-16-0:latest"
+  },
+  {
+    "name": "entitlements",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/entitlements/entitlements-v0-16-0:latest"
+  },
+  {
+    "name": "legal",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/security-and-compliance/legal/legal-v0-16-0:latest"
+  },
+  {
+    "name": "schema",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-release-0-16:latest"
+  },
+  {
+    "name": "storage",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/storage/storage-v0-16-1:latest"
+  },
+  {
+    "name": "file",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/file/file-v0-16-1:latest"
+  },
+  {
+    "name": "dataset",
+    "tag": "0.16.1",
+    "image": "community.opengroup.org:5555/osdu/platform/system/dataset/dataset-v0-16-1:latest"
+  },
+  {
+    "name": "indexer",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-service/indexer-service-v0-16-0:latest"
+  },
+  {
+    "name": "indexer-queue",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/indexer-service/indexer-service-v0-16-0:latest"
+  },
+  {
+    "name": "search",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/search-service/search-service-v0-16-1:latest"
+  },
+  {
+    "name": "register",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/register/register-v0-16-1:latest"
+  },
+  {
+    "name": "notification",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/notification/notification-v0-16-2:latest"
+  },
+  {
+    "name": "unit",
+    "tag": "0.16.1",
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/unit-service/unit-service-v0-16-1:latest"
+  },
+  {
+    "name": "crs-catalog",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-catalog-service/crs-catalog-service-v0-16-1:latest"
+  },
+  {
+    "name": "crs-conversion",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/system/reference/crs-conversion-service/crs-conversion-service-v0-16-1:latest"
+  },
+  {
+    "name": "wks",
+    "tag": "0.13.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/enrichment/wks/wks-release-0-13:latest"
+  },
+  {
+    "name": "workflow",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/ingestion-workflow/ingestion-workflow-v0-16-1:latest"
+  },
+  {
+    "name": "wellbore-ddms",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/wellbore/wellbore-domain-services/v0-16-0:d65401ebef84f7194a278fa3312cbec44eb98cd2"
+  },
+  {
+    "name": "sdms",
+    "tag": "0.16.0",
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/seismic-dms-suite/seismic-store-service/release-0-16:cfc5d2ce754b55a1e50c332d5904c31aaad15a52"
+  },
+  {
+    "name": "csv-parser",
+    "tag": "0.13.0",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-release-0-13:93ca5b7a4e376f171a87181d888601e3d7c68e80"
+  },
+  {
+    "name": "segy-to-zgy-conversion",
+    "tag": "0.13.1",
+    "image": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
+  },
+  {
+    "name": "segy-to-vds-conversion",
+    "tag": "2.1.12",
+    "image": "community.opengroup.org:5555/osdu/platform/domain-data-mgmt-services/seismic/open-vds/openvds-ingestion:2.1.12"
+  },
+  {
+    "name": "csv-parser-loader",
+    "tag": "0.11.0",
+    "image": "msosdu.azurecr.io/csv-parser-dag:0.11.0",
+    "v13": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/csv-parser/csv-parser/csv-parser-dag-v0-13-0:cfd8e79cb4088be679c0e3c9ae7c25888d7ec2bb"
+  },
+  {
+    "name": "segy-to-zgy-conversion-loader",
+    "tag": "0.11.0",
+    "image": "msosdu.azurecr.io/segy-to-zgy-conversion-dag:0.11.0",
+    "v13": "community.opengroup.org:5555/osdu/platform/data-flow/ingestion/segy-to-zgy-conversion/segy-to-zgy-conversion-dag-v0-13-1:e9941b0ac5c244cb77f8fb366c1a32df406c8f07"
+  },
+  {
+    "name": "segy-to-vds-conversion-loader",
+    "tag": "0.11.0",
+    "image": "msosdu.azurecr.io/segy-to-vds-conversion-dag:0.11.0",
+    "v13": "Doesn't exist"
+  },
+  {
+    "name": "schema-load",
+    "tag": "0.13.1",
+    "image": "community.opengroup.org:5555/osdu/platform/system/schema-service/schema-service-schema-load-master:a5b19c1c7505319d6d21f8d97ed0e6148bad900c"
+  }
+]

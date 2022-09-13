@@ -194,8 +194,8 @@ jobs:
         run: |
           if [ ${INSTALL_CSV} != false ];
           then
-            LOADER=$(jq -c '.[] |select( .name == "csv-parser-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
-            DAG=$(jq -c '.[] |select( .name == "csv-parser" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            LOADER=$(jq -c '.[] |select( .name == "csv-parser-loader" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
+            DAG=$(jq -c '.[] |select( .name == "csv-parser" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
 
             docker run \
               --env CSV_PARSER_IMAGE=${REGISTRY}/csv-parser:$(echo $DAG | jq -r .tag) \
@@ -206,8 +206,8 @@ jobs:
         run: |
           if [ ${INSTALL_ZGY} != false ];
           then
-            LOADER=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
-            DAG=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            LOADER=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
+            DAG=$(jq -c '.[] |select( .name == "segy-to-zgy-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
 
             docker run \
               --env DAG_TASK_IMAGE=$REGISTRY/segy-to-zgy-conversion:$(echo $DAG | jq -r .tag) \
@@ -218,8 +218,8 @@ jobs:
         run: |
           if [ ${INSTALL_VDS} != false ];
           then
-            LOADER=$(jq -c '.[] |select( .name == "segy-to-vds-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
-            DAG=$(jq -c '.[] |select( .name == "segy-to-vds-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.13.0.json)
+            LOADER=$(jq -c '.[] |select( .name == "segy-to-vds-conversion-loader" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
+            DAG=$(jq -c '.[] |select( .name == "segy-to-vds-conversion" )' $GITHUB_WORKSPACE/configuration/release_0.16.0.json)
 
             docker run \
               --env DAG_TASK_IMAGE=${REGISTRY}/segy-to-vds-conversion:$(echo $DAG | jq -r .tag) \
