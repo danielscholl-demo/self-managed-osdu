@@ -70,9 +70,6 @@ feature_flag = {
   autoscaling    = false
 }
 
-# Feature flag for keda v2
-keda_v2_enabled = true
-
 # cosmos DB SQL collections
 cosmos_sql_collections = [
   {
