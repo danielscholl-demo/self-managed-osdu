@@ -14,7 +14,7 @@ locals {
   helm_pod_identity_name    = "aad-pod-identity"
   helm_pod_identity_ns      = "podidentity"
   helm_pod_identity_repo    = "https://raw.githubusercontent.com/Azure/aad-pod-identity/master/charts"
-  helm_pod_identity_version = "4.1.7"
+  helm_pod_identity_version = "1.8.12"
 }
 
 resource "kubernetes_namespace" "pod_identity" {
