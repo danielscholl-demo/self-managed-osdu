@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
 
 env:
-  CLI_VERSION: 2.30.0
+  CLI_VERSION: 2.40.0
 
   CONTROLPLANE_WORKSPACE: "cpl-${{ secrets.RAND }}"
   DATAPLANE_WORKSPACE: "dpl-${{ secrets.RAND }}"
   PARTITION_WORKSPACE: "prt-${{ secrets.RAND }}"
   DASHBOARD_WORKSPACE: "dash-${{ secrets.RAND }}"
 
-  OSDU_VERSION: 0.13.0
+  OSDU_VERSION: 0.16.0
   PARTITION_NAME: opendes
   IMAGE_TAG: latest
 

@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 env:
-  CLI_VERSION: 2.30.0
+  CLI_VERSION: 2.40.0
   CLUSTER: osdu-stamp
 
-  OSDU_VERSION: 0.13.0
+  OSDU_VERSION: 0.16.0
   PARTITION_NAME: opendes
 
 jobs:
