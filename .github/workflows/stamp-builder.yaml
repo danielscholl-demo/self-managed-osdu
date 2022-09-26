@@ -26,7 +26,7 @@ jobs:
         with:
           azcliversion: ${{ env.CLI_VERSION }}
           inlineScript: |
-            PRINCIPAL_OID=$(az ad sp show --id $(az account show --query user.name -otsv) --query objectId -otsv)
+            PRINCIPAL_OID=$(az ad sp show --id $(az account show --query user.name -otsv) --query id -otsv)
             az deployment sub validate --name 'osdu-${{ secrets.RAND }}' --location ${{ secrets.AZURE_LOCATION }} --template-file $GITHUB_WORKSPACE/main.bicep \
               --parameter location=${{ secrets.AZURE_LOCATION }} \
               --parameter suffix=${{ secrets.RAND }} \
@@ -37,7 +37,7 @@ jobs:
         with:
           azcliversion: ${{ env.CLI_VERSION }}
           inlineScript: |
-            PRINCIPAL_OID=$(az ad sp show --id $(az account show --query user.name -otsv) --query objectId -otsv)
+            PRINCIPAL_OID=$(az ad sp show --id $(az account show --query user.name -otsv) --query id -otsv)
             GROUP=$(az deployment sub create --name 'osdu-${{ secrets.RAND }}' --location ${{ secrets.AZURE_LOCATION }} --template-file $GITHUB_WORKSPACE/main.bicep \
               --parameter location=${{ secrets.AZURE_LOCATION }} \
               --parameter suffix=${{ secrets.RAND }} \
