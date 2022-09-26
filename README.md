@@ -133,13 +133,17 @@ Deployment of a self managed osdu instance is performed by executing github acti
 
 3. __[Stamp Provision](../../actions/workflows/stamp-provision.yaml)__: This action provisions resources for the Deployment Stamp.  _(Time: ~1h)_
 
-4. __[Stamp Install](../../actions/workflows/stamp-configure.yaml)__: This action initializes the Software Configuration process of the Deployment Stamp and the software deployment occurs after pipeline completion.  _(Time: ~20m)_
+4. __[Stamp Images](../../actions/workflows/stamp-images.yaml)__: This action loads up the images in the instance ACR.  _(Time: ~20m)_
+
+5. __[Stamp Install](../../actions/workflows/stamp-install.yaml)__: This action initializes the Software Configuration process of the Deployment Stamp and the software deployment occurs after pipeline completion.  _(Time: ~20m)_
 
 > Note: Prior to running the Stamp Load due to a recent change in Azure AD Applications the AD Application needs to be approved for access.  This can be done by accessing the Login Page. Access the $DNS_HOST/login
 
-5. __[Stamp Load](../../actions/workflows/stamp-load.yaml)__: This action initializes the partition and loads the necessary data into the Stamp to allow it to fully function. (ie: Entitlements, Schemas, Workflow)  _(Time: ~20m)_
+6. __[Stamp Airflow](../../actions/workflows/stamp-airflow.yaml)__: This action initializes the partition and loads the necessary data into the Stamp to allow it to fully function. (ie: Entitlements, Schemas, Workflow)  _(Time: ~20m)_
 
-6. __[Stamp Uninstall](../../actions/workflows/stamp-uninstall.yaml)__: This action uninstalls the OSDU Stamp and requires Github Secrets used as Feature Flags to enable the activity.
+7. __[Stamp Load](../../actions/workflows/stamp-load.yaml)__: This action initializes the partition and loads the necessary data into the Stamp to allow it to fully function. (ie: Entitlements, Schemas, Workflow)  _(Time: ~20m)_
+
+8. __[Stamp Uninstall](../../actions/workflows/stamp-uninstall.yaml)__: This action uninstalls the OSDU Stamp and requires Github Secrets used as Feature Flags to enable the activity.
 
   - Secret: UNINSTALL - This secret will trigger the feature flag to perform a software uninstall.
   - Secret: REMOVE - This secret will trigger the feature flag to delete the entire Stamp. (Locks must be manually removed first)

@@ -7,7 +7,6 @@ env:
   CLI_VERSION: 2.40.0
 
   OSDU_VERSION: 0.16.0
-  INGESTION_DAG_VERSION: 0.12.0
 
 jobs:
   image-data:
