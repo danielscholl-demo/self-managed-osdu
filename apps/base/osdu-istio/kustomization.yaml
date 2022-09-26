@@ -6,4 +6,4 @@ resources:
   - source.yaml
   - istio-base.yaml
   - istio-operator.yaml
-  - release.yaml
+  # - release.yaml
