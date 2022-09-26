@@ -10,7 +10,7 @@ resources:
   # - ../base/osdu-ddms-seismic
   # - ../base/osdu-ddms-wellbore
 patchesStrategicMerge:
-  - istio-values.yaml
+  # - istio-values.yaml
   # - airflow-base-values.yaml
   # - airflow-values.yaml
   # - self-managed-base-values.yaml
