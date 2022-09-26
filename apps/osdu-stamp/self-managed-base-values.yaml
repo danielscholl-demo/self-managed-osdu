@@ -10,10 +10,10 @@ spec:
     azure:
       tenant: 72f988bf-86f1-41af-91ab-2d7cd011db47
       subscription: 2e458de2-af10-484c-a5a5-6c259d9a907f
-      resourcegroup: osdu-self-cplcfhch-dmii-rg
-      identity: osdu-self-cplcfhch-dmii-osdu-identity
-      identity_id: c9cc119c-5415-419b-941c-8d4088ae1afb
-      keyvault: osdu-self-cplcfh-dmii-kv
+      resourcegroup: osdu-self-cplbhcdc-6099-rg
+      identity: osdu-self-cplbhcdc-6099-osdu-identity
+      identity_id: 9b7856fd-a5b6-4164-abe9-24c1164cff0d
+      keyvault: osdu-self-cplbhc-6099-kv
       appid: f78ba065-2926-4df4-a2a2-c8cd2657c8dd
       oidAuthEnabled: false
     resourceLimits:

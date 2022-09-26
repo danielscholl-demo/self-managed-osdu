@@ -8,8 +8,8 @@ spec:
   values:
     configuration:
     - service: indexer-queue
-      repository: osduselfcplcfhdmiicr.azurecr.io/indexer-queue
-      tag: 0.13.0
+      repository: osduselfcplbhc6099cr.azurecr.io/indexer-queue
+      tag: 
       keyvault: true
       request:
         cpu: 1000m

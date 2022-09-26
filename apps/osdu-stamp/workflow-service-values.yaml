@@ -7,11 +7,11 @@ metadata:
 spec:
   values:
     ingress:
-      dns: osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com
+      dns: osdu-self-dplbhcdc-q4yn-gw.westeurope.cloudapp.azure.com
     configuration:
     - service: workflow
-      repository: osduselfcplcfhdmiicr.azurecr.io/workflow
-      tag: 0.13.0
+      repository: osduselfcplbhc6099cr.azurecr.io/workflow
+      tag: 
       path: /api/workflow/*
       probe:
         path: /actuator/health

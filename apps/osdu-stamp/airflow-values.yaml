@@ -36,7 +36,10 @@ spec:
             readOnly: true
             volumeAttributes:
               secretProviderClass: azure-keyvault
-      extraPipPackages: ["flask-bcrypt==0.7.1"]
+      extraPipPackages:
+        [
+          "flask-bcrypt==0.7.1",
+        ]
       config:
         AIRFLOW__CORE__LOGGING_LEVEL: DEBUG
         AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "False"
@@ -46,12 +49,12 @@ spec:
         #AIRFLOW__CORE__REMOTE_BASE_LOG_FOLDER: "wasb-airflowlog"
         #AIRFLOW__CORE__LOGGING_CONFIG_CLASS: "log_config.DEFAULT_LOGGING_CONFIG"
         #AIRFLOW__CORE__LOG_FILENAME_TEMPLATE: "{{ run_id }}/{{ ti.dag_id }}/{{ ti.task_id }}/{{ ts }}/{% if dag_run.conf is not none and 'correlation_id' in dag_run.conf %}{{ dag_run.conf['correlation_id'] }}{% else %}None{% endif %}/{{ try_number }}.log"
-        AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com/airflow"
+        AIRFLOW__WEBSERVER__BASE_URL: "https://osdu-self-dplbhcdc-q4yn-gw.westeurope.cloudapp.azure.com/airflow"
         AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: "True"
         AIRFLOW__WEBSERVER__AUTHENTICATE: "True"
-        #AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-        #AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
-        #AIRFLOW__CELERY__SSL_ACTIVE: "True"
+        AIRFLOW__WEBSERVER__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+        AIRFLOW__API__AUTH_BACKEND: "airflow.contrib.auth.backends.password_auth"
+        AIRFLOW__CELERY__SSL_ACTIVE: "True"
       extraEnv:
         - name: AIRFLOW_VAR_KEYVAULT_URI
           valueFrom:
@@ -96,7 +99,7 @@ spec:
         - name: CLOUD_PROVIDER
           value: "azure"
         - name: AIRFLOW_VAR_AZURE_DNS_HOST
-          value: "osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com"
+          value: "osdu-self-dplbhcdc-q4yn-gw.westeurope.cloudapp.azure.com"
         - name: AIRFLOW_VAR_AZURE_ENABLE_MSI
           value: "false"
         - name: CI_COMMIT_TAG
@@ -108,11 +111,11 @@ spec:
         - name: AIRFLOW_VAR_CORE__CONFIG__DATALOAD_CONFIG_PATH
           value: "/opt/airflow/dags/configs/dataload.ini"
         - name: AIRFLOW_VAR_CORE__SERVICE__SCHEMA__URL
-          value: "http://schema.osdu-azure.svc.cluster.local/api/schema-service/v1/schema"
+          value:  "http://schema.osdu-azure.svc.cluster.local/api/schema-service/v1/schema"
         - name: AIRFLOW_VAR_CORE__SERVICE__SEARCH__URL
           value: "http://search.osdu-azure.svc.cluster.local/api/search/v2/query"
         - name: AIRFLOW_VAR_CORE__SERVICE__STORAGE__URL
-          value: "http://storage.osdu-azure.svc.cluster.local/api/storage/v2/records"
+          value:  "http://storage.osdu-azure.svc.cluster.local/api/storage/v2/records"
         - name: AIRFLOW_VAR_CORE__SERVICE__FILE__HOST
           value: "http://file.osdu-azure.svc.cluster.local/api/file/v2"
         - name: AIRFLOW_VAR_CORE__SERVICE__WORKFLOW__HOST
@@ -130,7 +133,7 @@ spec:
         - name: AIRFLOW_VAR_ENV_VARS_ENABLED
           value: "true"
         - name: AIRFLOW__WEBSERVER__BASE_URL
-          value: "https://osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com/airflow"
+          value: "https://osdu-self-dplbhcdc-q4yn-gw.westeurope.cloudapp.azure.com/airflow"
 
     ###################################
     ## COMPONENT | Airflow Scheduler
@@ -194,7 +197,7 @@ spec:
           cert-manager.io/cluster-issuer: letsencrypt-prod-dns
           cert-manager.io/acme-challenge-type: http01
         path: "/airflow"
-        host: osdu-self-dplcfhch-0jt7-gw.westeurope.cloudapp.azure.com
+        host: osdu-self-dplbhcdc-q4yn-gw.westeurope.cloudapp.azure.com
         livenessPath: "/airflow/health"
         tls:
           enabled: true
@@ -214,20 +217,20 @@ spec:
     ## DATABASE | Embedded Postgres
     ###################################
     postgresql:
-      enabled: true
+      enabled: false
 
     ###################################
     ## DATABASE | External Database
     ###################################
-    # externalDatabase:
-    #   type: postgres
-    #   host: osdu-self-dplcfhch-0jt7-pg.postgres.database.azure.com
-    #   user: osdu_admin@osdu-self-dplcfhch-0jt7-pg
-    #   passwordSecret: "postgres"
-    #   passwordSecretKey: "postgres-password"
-    #   port: 5432
-    #   properties: "?sslmode=require"
-    #   database: airflow
+    externalDatabase:
+      type: postgres
+      host: osdu-self-dplbhcdc-q4yn-pg.postgres.database.azure.com
+      user: osdu_admin@osdu-self-dplbhcdc-q4yn-pg
+      passwordSecret: "postgres"
+      passwordSecretKey: "postgres-password"
+      port: 5432
+      properties: "?sslmode=require"
+      database: airflow
 
     ###################################
     ## DATABASE | Embedded Redis
@@ -239,7 +242,7 @@ spec:
     ## DATABASE | External Redis
     ###################################
     externalRedis:
-      host: osdu-self-dplcfhch-0jt7-cache.redis.cache.windows.net
+      host: osdu-self-dplbhcdc-q4yn-cache.redis.cache.windows.net
       passwordSecret: "redis"
       passwordSecretKey: "redis-password"
       port: 6380
