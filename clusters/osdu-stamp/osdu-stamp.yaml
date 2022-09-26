@@ -12,10 +12,10 @@ spec:
   path: ./apps/osdu-stamp/
   prune: true
   validation: client
-  # healthChecks:
-  # - kind: Deployment
-  #   name: istio-operator
-  #   namespace: istio-operator
+  healthChecks:
+  - kind: Deployment
+    name: istio-operator
+    namespace: istio-operator
   # - kind: Deployment
   #   name: istiod
   #   namespace: istio-system
