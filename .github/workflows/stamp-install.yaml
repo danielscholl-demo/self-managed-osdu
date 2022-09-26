@@ -129,75 +129,75 @@ jobs:
             - kind: Deployment
               name: istio-ingressgateway
               namespace: istio-system
-            - kind: Deployment
-              name: appinsights-statsd
-              namespace: airflow
-            - kind: Deployment
-              name: log-processor
-              namespace: airflow
-            - kind: Deployment
-              name: default
-              namespace: osdu-azure
-            - kind: Deployment
-              name: token
-              namespace: dev-sample
-            - kind: Deployment
-              name: partition
-              namespace: osdu-azure
-            - kind: Deployment
-              name: entitlements
-              namespace: osdu-azure
-            - kind: Deployment
-              name: legal
-              namespace: osdu-azure
-            - kind: Deployment
-              name: storage
-              namespace: osdu-azure
-            - kind: Deployment
-              name: schema
-              namespace: osdu-azure
-            - kind: Deployment
-              name: file
-              namespace: osdu-azure
-            - kind: Deployment
-              name: dataset
-              namespace: osdu-azure
-            - kind: Deployment
-              name: indexer
-              namespace: osdu-azure
-            - kind: Deployment
-              name: indexer-queue
-              namespace: osdu-azure
-            - kind: Deployment
-              name: search
-              namespace: osdu-azure
-            - kind: Deployment
-              name: notification
-              namespace: osdu-azure
-            - kind: Deployment
-              name: register
-              namespace: osdu-azure
-            - kind: Deployment
-              name: unit
-              namespace: osdu-azure
-            - kind: Deployment
-              name: crs-catalog
-              namespace: osdu-azure
-            - kind: Deployment
-              name: crs-conversion
-              namespace: osdu-azure
-            - kind: Deployment
-              name: wks
-              namespace: osdu-azure
-            - kind: Deployment
-              name: workflow
-              namespace: osdu-azure
-            - kind: Deployment
-              name: seismic-ddms
-              namespace: ddms-seismic
-            - kind: Deployment
-              name: wellbore-ddms
-              namespace: ddms-wellbore
+            # - kind: Deployment
+            #   name: appinsights-statsd
+            #   namespace: airflow
+            # - kind: Deployment
+            #   name: log-processor
+            #   namespace: airflow
+            # - kind: Deployment
+            #   name: default
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: token
+            #   namespace: dev-sample
+            # - kind: Deployment
+            #   name: partition
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: entitlements
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: legal
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: storage
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: schema
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: file
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: dataset
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: indexer
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: indexer-queue
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: search
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: notification
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: register
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: unit
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: crs-catalog
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: crs-conversion
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: wks
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: workflow
+            #   namespace: osdu-azure
+            # - kind: Deployment
+            #   name: seismic-ddms
+            #   namespace: ddms-seismic
+            # - kind: Deployment
+            #   name: wellbore-ddms
+            #   namespace: ddms-wellbore
           EOF
 
           cat > $GITHUB_WORKSPACE/apps/$CLUSTER/kustomization.yaml << EOF
@@ -207,37 +207,37 @@ jobs:
           resources:
             - ../base/osdu-base
             - ../base/osdu-istio
-            - ../base/osdu-airflow
-            - ../base/dev-sample
-            - ../base/osdu-azure
-            - ../base/osdu-ddms-seismic
-            - ../base/osdu-ddms-wellbore
+            # - ../base/osdu-airflow
+            # - ../base/dev-sample
+            # - ../base/osdu-azure
+            # - ../base/osdu-ddms-seismic
+            # - ../base/osdu-ddms-wellbore
           patchesStrategicMerge:
             - istio-values.yaml
-            - airflow-base-values.yaml
-            - airflow-values.yaml
-            - self-managed-base-values.yaml
-            - default-service-values.yaml
-            - token-service-values.yaml
-            - partition-service-values.yaml
-            - entitlement-service-values.yaml
-            - legal-service-values.yaml
-            - storage-service-values.yaml
-            - schema-service-values.yaml
-            - file-service-values.yaml
-            - dataset-service-values.yaml
-            - indexer-service-values.yaml
-            - indexer-queue-values.yaml
-            - search-service-values.yaml
-            - notification-service-values.yaml
-            - register-service-values.yaml
-            - unit-service-values.yaml
-            - crs-catalog-values.yaml
-            - crs-conversion-values.yaml
-            - wks-service-values.yaml
-            - workflow-service-values.yaml
-            - ddms-seismic-values.yaml
-            - ddms-wellbore-values.yaml
+            # - airflow-base-values.yaml
+            # - airflow-values.yaml
+            # - self-managed-base-values.yaml
+            # - default-service-values.yaml
+            # - token-service-values.yaml
+            # - partition-service-values.yaml
+            # - entitlement-service-values.yaml
+            # - legal-service-values.yaml
+            # - storage-service-values.yaml
+            # - schema-service-values.yaml
+            # - file-service-values.yaml
+            # - dataset-service-values.yaml
+            # - indexer-service-values.yaml
+            # - indexer-queue-values.yaml
+            # - search-service-values.yaml
+            # - notification-service-values.yaml
+            # - register-service-values.yaml
+            # - unit-service-values.yaml
+            # - crs-catalog-values.yaml
+            # - crs-conversion-values.yaml
+            # - wks-service-values.yaml
+            # - workflow-service-values.yaml
+            # - ddms-seismic-values.yaml
+            # - ddms-wellbore-values.yaml
           EOF
 
       - name: Create Helm Values - osdu-istio
